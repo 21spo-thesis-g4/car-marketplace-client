@@ -15,8 +15,6 @@
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
   margin: 0;
   padding: 0;
@@ -27,7 +25,6 @@ body {
   position: fixed;
   top: 0;
   width: 100%;
-  background-color: #1d1d1d;
   z-index: 1000;
   border-bottom: 1px solid #171717;
   display: flex;

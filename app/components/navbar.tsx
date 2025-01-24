@@ -14,17 +14,17 @@ const Navbar: React.FC = () => {
                 <ul className="navbar-links">
                     <div className="navbar-left">
                         <li>
-                            <Link href="/etsi">Etsi</Link>
+                            <Link href="/search">Search</Link>
                         </li>
                         <li>
-                            <Link href="/uudet">Uudet</Link>
+                            <Link href="/new">New</Link>
                         </li>
                         <li>
-                            <Link href="/varaosat">Varaosat</Link>
+                            <Link href="/spareparts">Spare parts</Link>
                         </li>
                     </div>
                     <li className="right">
-                        <Link href="/tili">Tili</Link>
+                        <Link href="/users/login">Login</Link>
                     </li>
                 </ul>
             </div>
