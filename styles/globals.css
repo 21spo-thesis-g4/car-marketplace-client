@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -15,7 +16,7 @@
 }
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Quicksand", Arial, Helvetica, sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -26,7 +27,7 @@ body {
   top: 0;
   width: 100%;
   z-index: 1000;
-  border-bottom: 1px solid #171717;
+  --border-bottom: 2px solid #171717;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -65,4 +66,18 @@ body {
 
 .navbar-links .right {
   margin-left: auto;
+}
+
+.hero {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  text-align: center;
+  padding: 20px;
+}
+
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

@@ -47,8 +47,13 @@ const RegisterPage: React.FC = () => {
                     </div>
                 </form>
                 <div className="text-center">
-                    <Link href="/users/login" className="link link-primary">Already a user? Login here</Link>
+                    <Link href="/users/login" className="link link-primary"></Link>
                 </div>
+                <Link href="/users/login" className='link no-underline'>
+                    <button className='btn btn-outline w-full'>
+                        Already a user? Login here
+                    </button>
+                </Link>
             </div>
         </div>
     );

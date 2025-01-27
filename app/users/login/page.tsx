@@ -27,12 +27,14 @@ const LoginPage: React.FC = () => {
                     </div>
                     <button type="submit" className="btn btn-primary w-full">Login</button>
                 </form>
-                <div className="text-center">
+                <div className="text-center pb-8">
                     <Link href="#" className="link link-primary">Forgot password?</Link>
                 </div>
-                <div className="text-center">
-                    <Link href="/users/new" className="link link-primary">Don't have an account? Create it here</Link>
-                </div>
+                <Link href="/users/new" className='link no-underline'>
+                    <button className='btn btn-outline w-full'>
+                        Don't have an account? Create it here
+                    </button>
+                </Link>
             </div>
         </div>
     );
