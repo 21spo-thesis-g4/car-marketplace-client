@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
 @tailwind base;
 @tailwind components;
@@ -16,14 +17,13 @@
 }
 
 body {
-  font-family: "Quicksand", Arial, Helvetica, sans-serif;
+  font-family: "Open Sans","Quicksand", Arial, Helvetica, sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
 .navbar {
-  position: fixed;
   top: 0;
   width: 100%;
   z-index: 1000;
@@ -68,16 +68,31 @@ body {
   margin-left: auto;
 }
 
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
 .hero {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   text-align: center;
-  padding: 20px;
+  padding: 1rem;
 }
 
 .hero-content {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.container {
+  max-width: 100%;
+}
+
+.card{
+  width: 100%;
 }

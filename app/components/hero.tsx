@@ -4,9 +4,9 @@ import HeroCar from '../../public/car.png';
 
 const Hero: React.FC = () => {
     return (
-        <div className="hero min-h-screen flex items-center justify-center">
+        <div className="hero flex items-center justify-center">
             <div className="hero-content">
-                <div className="mt-8">
+                <div>
                     <Image src={HeroCar} alt="CarNet"/>
                 </div>
             </div>
