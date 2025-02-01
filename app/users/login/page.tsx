@@ -32,7 +32,7 @@ const LoginPage: React.FC = () => {
                 </div>
                 <Link href="/users/new" className='link no-underline'>
                     <button className='btn btn-outline w-full'>
-                        Don't have an account? Create it here
+                        Don&apos;t have an account? Create it here
                     </button>
                 </Link>
             </div>
