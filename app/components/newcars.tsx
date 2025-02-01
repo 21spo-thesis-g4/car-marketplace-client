@@ -17,7 +17,7 @@ const cars = [
     { id: 12, make: 'Kia', model: 'Optima', year: 2019, price: 21000 }
 ];
 
-const Newbies = () => {
+const NewCars = () => {
     return (
         <div className="container mx-auto p-4">
             <div className="grid grid-cols-3 gap-4">
@@ -35,4 +35,4 @@ const Newbies = () => {
     );
 };
 
-export default Newbies;
+export default NewCars;

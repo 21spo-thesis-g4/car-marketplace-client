@@ -1,6 +1,6 @@
 import Hero from './components/hero';
 import SearchBox from './components/search';
-import Newbies from './components/newbies';
+import NewCars from './components/newcars';
 
 export default function Home() {
   return (
@@ -11,7 +11,7 @@ export default function Home() {
           <SearchBox />
         </div>
         <div className="w-2/5">
-          <Newbies />
+          <NewCars />
         </div>
       </div>
     </main>
