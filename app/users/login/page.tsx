@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-export const loginUser = async (email: string, password: string) => {
+const loginUser = async (email: string, password: string) => {
     try {
       const response = await fetch('http://localhost:4000/auth/login', {
         method: 'POST',

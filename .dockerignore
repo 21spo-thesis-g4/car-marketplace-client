@@ -1,0 +1,20 @@
+# Node modules
+node_modules
+npm-debug.log
+yarn.lock
+
+# Next.js build output (jos monivaihebuild hoitaa sen)
+.next
+out
+
+# VSC/IDE stuff
+.vscode
+.idea
+
+# Git
+.git
+.gitignore
+
+# Dockerfile, if you don't want it in the context
+Dockerfile
+.dockerignore

@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import React, { useState } from 'react';
 
-export const registerUser = async ({ name, email, phone, password, role, adminKey }: { name: string, email: string, phone: string, password: string, role: string, adminKey?: string }) => {
+const registerUser = async ({ name, email, phone, password, role, adminKey }: { name: string, email: string, phone: string, password: string, role: string, adminKey?: string }) => {
     try {
       const response = await fetch('http://localhost:4000/register', {
         method: 'POST',
