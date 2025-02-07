@@ -2,16 +2,18 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
+
 const Dashboard: React.FC = () => {
   const [user, setUser] = useState<{ name: string; email: string; role: string } | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    
+
     if (!token) {
-      router.push("/auth/login"); // Redirect if no token
+      router.push("/users/login"); // Redirect if no token
       return;
     }
 
@@ -34,13 +36,18 @@ const Dashboard: React.FC = () => {
       })
       .catch((error) => {
         console.error("Error fetching user data:", error);
+        setError("An error occurred while fetching your data. Please log in again.");
         localStorage.removeItem("token");
-        router.push("/auth/login");
+        router.push("/users/login");
       });
-  }, []);
+  }, [router]);
 
   if (loading) {
     return <div className="flex items-center justify-center h-screen">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="flex items-center justify-center h-screen">{error}</div>;
   }
 
   return (
@@ -57,7 +64,7 @@ const Dashboard: React.FC = () => {
             className="btn btn-primary"
             onClick={() => {
               localStorage.removeItem("token");
-              router.push("/auth/login");
+              router.push("/users/login");
             }}
           >
             Logout
