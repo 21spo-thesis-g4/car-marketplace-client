@@ -23,12 +23,12 @@ const NewCars = () => {
             <div className="grid grid-cols-3 gap-4">
                 {cars.map((car) => (
                     <div key={car.id} className="card shadow-xl">
-                            <Image src={car1} alt={car.model} />
-                            <h2 className="card-title">{car.model}</h2>
-                            <p>
-                                ${car.price}, {car.year}
-                            </p>
-                        </div>
+                        <Image src={car1} alt={car.model} />
+                        <h2 className="card-title">{car.model}</h2>
+                        <p>
+                            ${car.price}, {car.year}
+                        </p>
+                    </div>
                 ))}
             </div>
         </div>

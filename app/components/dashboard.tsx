@@ -51,8 +51,8 @@ const Dashboard: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="w-full max-w-md p-8 space-y-8 rounded-lg shadow-md bg-white">
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="w-full max-w-md p-8 space-y-8 rounded-lg shadow-md">
         <h2 className="text-2xl font-bold text-center">User Dashboard</h2>
         <div className="space-y-4">
           <p className="text-lg">Welcome, {user?.name}!</p>
