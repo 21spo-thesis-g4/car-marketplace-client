@@ -25,7 +25,7 @@ const Navbar: React.FC = () => {
                     </div>
                     <div className="right">
                         <li>
-                            <Link href="/dashboard">Account</Link>
+                            <Link href="/profile">Account</Link>
                         </li>
                     </div>
                 </ul>

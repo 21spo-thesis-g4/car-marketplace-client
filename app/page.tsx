@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <main className="flex flex-col items-center">
       <Hero />
-      <div className="container flex bg-neutral-900 min-w-full justify-center mt-4 -translate-y-56">
+      <div className="container flex w-4/5 justify-center mt-4 -translate-y-56">
         <div className="w-1/5">
           <SearchBox />
         </div>

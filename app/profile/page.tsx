@@ -1,10 +1,10 @@
 import React from 'react'
-import DashboardComponent from '../components/dashboard'
+import ProfileComp from '../components/profile'
 
 function Dashboard() {
   return (
     <div>
-        <DashboardComponent />
+        <ProfileComp />
     </div>
   )
 }
