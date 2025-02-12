@@ -45,7 +45,7 @@ const LoginPage: React.FC = () => {
       console.log('API response:', response);
       setMessage('Login successful');
       localStorage.setItem('token', response.token); // Store JWT in local storage
-      router.push('/users/dashboard');
+      router.push('/dashboard');
     } catch (err) {
       console.error('Error:', err);
       if (err instanceof Error) {
@@ -98,7 +98,7 @@ const LoginPage: React.FC = () => {
         <div className="text-center pb-8">
           <Link href="#" className="link link-primary">Forgot password?</Link>
         </div>
-        <Link href="/users/new" className='link no-underline'>
+        <Link href="/register" className='link no-underline'>
           <button className='btn btn-outline w-full'>
             Don&apos;t have an account? Create it here
           </button>

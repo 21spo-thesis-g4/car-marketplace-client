@@ -1,10 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-
+import NewCarListing from "./sell_cars/addcarlisting";
 
 const Dashboard: React.FC = () => {
-  const [user, setUser] = useState<{ name: string; email: string; role: string } | null>(null);
+  const [user, setUser] = useState<{ name: string; email: string} | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
@@ -13,7 +13,7 @@ const Dashboard: React.FC = () => {
     const token = localStorage.getItem("token");
 
     if (!token) {
-      router.push("/users/login"); // Redirect if no token
+      router.push("/login");
       return;
     }
 
@@ -21,7 +21,7 @@ const Dashboard: React.FC = () => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`, // Send token in headers
+        "Authorization": `Bearer ${token}`,
       },
     })
       .then((response) => {
@@ -38,7 +38,7 @@ const Dashboard: React.FC = () => {
         console.error("Error fetching user data:", error);
         setError("An error occurred while fetching your data. Please log in again.");
         localStorage.removeItem("token");
-        router.push("/users/login");
+        router.push("/login");
       });
   }, [router]);
 
@@ -53,18 +53,18 @@ const Dashboard: React.FC = () => {
   return (
     <div className="min-h-screen flex items-center justify-center">
       <div className="w-full max-w-md p-8 space-y-8 rounded-lg shadow-md">
-        <h2 className="text-2xl font-bold text-center">User Dashboard</h2>
+        <h2 className="text-2xl font-bold text-center">Profile</h2>
         <div className="space-y-4">
           <p className="text-lg">Welcome, {user?.name}!</p>
           <p>Email: {user?.email}</p>
-          <p>Role: {user?.role}</p>
+          <NewCarListing />
         </div>
         <div className="flex justify-center mt-6">
           <button
             className="btn btn-primary"
             onClick={() => {
               localStorage.removeItem("token");
-              router.push("/users/login");
+              router.push("/login");
             }}
           >
             Logout

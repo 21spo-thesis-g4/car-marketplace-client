@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Search: React.FC = () => {
     const [type, setType] = useState('');
@@ -7,6 +7,34 @@ const Search: React.FC = () => {
     const [model, setModel] = useState('');
     const [power, setPower] = useState('');
     const [modelYear, setModelYear] = useState('');
+
+    const [options, setOptions] = useState<{
+        types: { type: string }[],
+        brands: { brand: string }[],
+        models: { model: string }[],
+        powers: { power: string }[],
+        modelYears: { model_year: string }[],
+    }>({
+        types: [],
+        brands: [],
+        models: [],
+        powers: [],
+        modelYears: [],
+    });
+
+    useEffect(() => {
+        const fetchOptions = async () => {
+            try {
+                const response = await fetch('/api/options');
+                const data = await response.json();
+                setOptions(data);
+            } catch (err) {
+                console.error('Failed to fetch options', err);
+            }
+        };
+
+        fetchOptions();
+    }, []);
 
     const handleSearch = () => {
         // Implement search logic here
@@ -25,10 +53,11 @@ const Search: React.FC = () => {
                     onChange={(e) => setType(e.target.value)}
                 >
                     <option value="">Select Type</option>
-                    <option value="Sedan">Sedan</option>
-                    <option value="SUV">SUV</option>
-                    <option value="Truck">Truck</option>
-                    <option value="Coupe">Coupe</option>
+                    {options.types.map((option) => (
+                        <option key={option.type} value={option.type}>
+                            {option.type}
+                        </option>
+                    ))}
                 </select>
             </div>
             <div className="form-control">
@@ -41,10 +70,11 @@ const Search: React.FC = () => {
                     onChange={(e) => setBrand(e.target.value)}
                 >
                     <option value="">Select Brand</option>
-                    <option value="Toyota">Toyota</option>
-                    <option value="Honda">Honda</option>
-                    <option value="Ford">Ford</option>
-                    <option value="BMW">BMW</option>
+                    {options.brands.map((option) => (
+                        <option key={option.brand} value={option.brand}>
+                            {option.brand}
+                        </option>
+                    ))}
                 </select>
             </div>
             <div className="form-control">
@@ -57,10 +87,11 @@ const Search: React.FC = () => {
                     onChange={(e) => setModel(e.target.value)}
                 >
                     <option value="">Select Model</option>
-                    <option value="Corolla">Corolla</option>
-                    <option value="Civic">Civic</option>
-                    <option value="F-150">F-150</option>
-                    <option value="3 Series">3 Series</option>
+                    {options.models.map((option) => (
+                        <option key={option.model} value={option.model}>
+                            {option.model}
+                        </option>
+                    ))}
                 </select>
             </div>
             <div className="form-control">
@@ -73,10 +104,11 @@ const Search: React.FC = () => {
                     onChange={(e) => setPower(e.target.value)}
                 >
                     <option value="">Select Power</option>
-                    <option value="100hp">100hp</option>
-                    <option value="200hp">200hp</option>
-                    <option value="300hp">300hp</option>
-                    <option value="400hp">400hp</option>
+                    {options.powers.map((option) => (
+                        <option key={option.power} value={option.power}>
+                            {option.power}
+                        </option>
+                    ))}
                 </select>
             </div>
             <div className="form-control">
@@ -89,10 +121,11 @@ const Search: React.FC = () => {
                     onChange={(e) => setModelYear(e.target.value)}
                 >
                     <option value="">Select Model Year</option>
-                    <option value="2020">2020</option>
-                    <option value="2021">2021</option>
-                    <option value="2022">2022</option>
-                    <option value="2023">2023</option>
+                    {options.modelYears.map((option) => (
+                        <option key={option.model_year} value={option.model_year}>
+                            {option.model_year}
+                        </option>
+                    ))}
                 </select>
             </div>
             <button onClick={handleSearch} className="btn btn-primary w-full mt-4">Search</button>

@@ -116,7 +116,7 @@ const RegisterPage: React.FC = () => {
                         </button>
                     </div>
                 </form>
-                <Link href="/users/login" className='link no-underline'>
+                <Link href="/login" className='link no-underline'>
                     <button className='btn btn-outline w-full'>
                         Have an account? Login here
                     </button>
