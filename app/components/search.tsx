@@ -22,19 +22,36 @@ const Search: React.FC = () => {
         modelYears: [],
     });
 
-    useEffect(() => {
-        const fetchOptions = async () => {
-            try {
-                const response = await fetch('/api/options');
-                const data = await response.json();
-                setOptions(data);
-            } catch (err) {
-                console.error('Failed to fetch options', err);
-            }
-        };
-
-        fetchOptions();
-    }, []);
+    const fetchOptions = async () => {
+        try {
+            const response = await fetch('http://localhost:4000/api/options/search');
+            if (!response.ok) throw new Error(`HTTP Error! Status: ${response.status}`);
+    
+            const data = await response.json();
+            console.log("Fetched Options:", data);
+    
+            // Ensure the response has required fields, or set default values
+            setOptions({
+                types: data.types || [],
+                brands: data.brands || [],
+                models: data.models || [],
+                powers: data.powers || [],
+                modelYears: data.modelYears || [],
+            });
+    
+        } catch (err) {
+            console.error('Failed to fetch options:', err);
+    
+            // Set empty defaults to prevent frontend crashes
+            setOptions({
+                types: [],
+                brands: [],
+                models: [],
+                powers: [],
+                modelYears: [],
+            });
+        }
+    };
 
     const handleSearch = () => {
         // Implement search logic here
@@ -53,11 +70,13 @@ const Search: React.FC = () => {
                     onChange={(e) => setType(e.target.value)}
                 >
                     <option value="">Select Type</option>
-                    {options.types.map((option) => (
-                        <option key={option.type} value={option.type}>
-                            {option.type}
-                        </option>
-                    ))}
+                    {options.types && options.types.length > 0 ? (
+                        options.types.map((option) => (
+                            <option key={option.type} value={option.type}>{option.type}</option>
+                        ))
+                    ) : (
+                        <option disabled>Loading...</option>
+                    )}
                 </select>
             </div>
             <div className="form-control">
