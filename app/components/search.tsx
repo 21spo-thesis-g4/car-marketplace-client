@@ -1,155 +1,233 @@
-"use client"
-import React, { useState, useEffect } from 'react';
+"use client";
+import React, { useState, useEffect } from "react";
+import { Range } from 'react-range';
+
+interface VehicleType {
+  TypeID: number;
+  TypeName: string;
+}
+
+interface SubType {
+  SubTypeID: number;
+  Name: string;
+}
+
+interface Maker {
+  MakeID: number;
+  MakeName: string;
+}
+
+interface Model {
+  ModelID: number;
+  ModelName: string;
+}
 
 const Search: React.FC = () => {
-    const [type, setType] = useState('');
-    const [brand, setBrand] = useState('');
-    const [model, setModel] = useState('');
-    const [power, setPower] = useState('');
-    const [modelYear, setModelYear] = useState('');
+  const [types, setTypes] = useState<VehicleType[]>([]);
+  const [subTypes, setSubTypes] = useState<SubType[]>([]);
+  const [makers, setMakers] = useState<Maker[]>([]);
+  const [models, setModels] = useState<Model[]>([]);
+  const [minYear, setMinYear] = useState("");
+  const [maxYear, setMaxYear] = useState("");
+  const [mileage, setMileage] = useState([0, 500000]);
+  const [price, setPrice] = useState([0, 100000]);
 
-    const [options, setOptions] = useState<{
-        types: { type: string }[],
-        brands: { brand: string }[],
-        models: { model: string }[],
-        powers: { power: string }[],
-        modelYears: { model_year: string }[],
-    }>({
-        types: [],
-        brands: [],
-        models: [],
-        powers: [],
-        modelYears: [],
-    });
+  const [selectedMaker, setSelectedMaker] = useState<string>("");
 
-    const fetchOptions = async () => {
-        try {
-            const response = await fetch('http://localhost:4000/api/options/search');
-            if (!response.ok) throw new Error(`HTTP Error! Status: ${response.status}`);
-    
-            const data = await response.json();
-            console.log("Fetched Options:", data);
-    
-            // Ensure the response has required fields, or set default values
-            setOptions({
-                types: data.types || [],
-                brands: data.brands || [],
-                models: data.models || [],
-                powers: data.powers || [],
-                modelYears: data.modelYears || [],
-            });
-    
-        } catch (err) {
-            console.error('Failed to fetch options:', err);
-    
-            // Set empty defaults to prevent frontend crashes
-            setOptions({
-                types: [],
-                brands: [],
-                models: [],
-                powers: [],
-                modelYears: [],
-            });
-        }
+  const years = Array.from({ length: 60 }, (_, i) => (2025 - i).toString());
+
+  // Fetch vehicle types
+  useEffect(() => {
+    const fetchTypes = async () => {
+      try {
+        const response = await fetch("http://localhost:4000/api/options/vehicletypes");
+        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+
+        const data: VehicleType[] = await response.json();
+        setTypes(data);
+      } catch (error) {
+        console.error("Failed to fetch vehicle types:", error);
+      }
     };
 
-    const handleSearch = () => {
-        // Implement search logic here
-        console.log({ type, brand, model, power, modelYear });
+    fetchTypes();
+  }, []);
+
+  // Fetch sub types
+  useEffect(() => {
+    const fetchSubTypes = async () => {
+      try {
+        const response = await fetch(`http://localhost:4000/api/options/subtypes`);
+        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+
+        const data: SubType[] = await response.json();
+        setSubTypes(data);
+      } catch (error) {
+        console.error("Failed to fetch subtypes:", error);
+      }
     };
 
-    return (
-        <div className="p-4 rounded-lg shadow-md">
-            <div className="form-control">
-                <label className="label">
-                    <span className="label-text">Type</span>
-                </label>
-                <select
-                    className="select select-bordered"
-                    value={type}
-                    onChange={(e) => setType(e.target.value)}
-                >
-                    <option value="">Select Type</option>
-                    {options.types && options.types.length > 0 ? (
-                        options.types.map((option) => (
-                            <option key={option.type} value={option.type}>{option.type}</option>
-                        ))
-                    ) : (
-                        <option disabled>Loading...</option>
-                    )}
-                </select>
-            </div>
-            <div className="form-control">
-                <label className="label">
-                    <span className="label-text">Brand</span>
-                </label>
-                <select
-                    className="select select-bordered"
-                    value={brand}
-                    onChange={(e) => setBrand(e.target.value)}
-                >
-                    <option value="">Select Brand</option>
-                    {options.brands.map((option) => (
-                        <option key={option.brand} value={option.brand}>
-                            {option.brand}
-                        </option>
-                    ))}
-                </select>
-            </div>
-            <div className="form-control">
-                <label className="label">
-                    <span className="label-text">Model</span>
-                </label>
-                <select
-                    className="select select-bordered"
-                    value={model}
-                    onChange={(e) => setModel(e.target.value)}
-                >
-                    <option value="">Select Model</option>
-                    {options.models.map((option) => (
-                        <option key={option.model} value={option.model}>
-                            {option.model}
-                        </option>
-                    ))}
-                </select>
-            </div>
-            <div className="form-control">
-                <label className="label">
-                    <span className="label-text">Power</span>
-                </label>
-                <select
-                    className="select select-bordered"
-                    value={power}
-                    onChange={(e) => setPower(e.target.value)}
-                >
-                    <option value="">Select Power</option>
-                    {options.powers.map((option) => (
-                        <option key={option.power} value={option.power}>
-                            {option.power}
-                        </option>
-                    ))}
-                </select>
-            </div>
-            <div className="form-control">
-                <label className="label">
-                    <span className="label-text">Model Year</span>
-                </label>
-                <select
-                    className="select select-bordered"
-                    value={modelYear}
-                    onChange={(e) => setModelYear(e.target.value)}
-                >
-                    <option value="">Select Model Year</option>
-                    {options.modelYears.map((option) => (
-                        <option key={option.model_year} value={option.model_year}>
-                            {option.model_year}
-                        </option>
-                    ))}
-                </select>
-            </div>
-            <button onClick={handleSearch} className="btn btn-primary w-full mt-4">Search</button>
+    fetchSubTypes();
+  }, []);
+
+  // Fetch makers
+  useEffect(() => {
+    const fetchMakers = async () => {
+      try {
+        const response = await fetch("http://localhost:4000/api/options/makers");
+        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+
+        const data: Maker[] = await response.json();
+        setMakers(data);
+      } catch (error) {
+        console.error("Failed to fetch makers:", error);
+      }
+    };
+
+    fetchMakers();
+  }, []);
+
+  // Fetch models
+  useEffect(() => {
+    if (!selectedMaker) return;
+
+    const fetchModels = async () => {
+      try {
+        const response = await fetch(`http://localhost:4000/api/options/models/${selectedMaker}`);
+        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+
+        const data: Model[] = await response.json();
+        setModels(data);
+      } catch (error) {
+        console.error("Failed to fetch models:", error);
+      }
+    };
+
+    fetchModels();
+  }, [selectedMaker]);
+  
+  return (
+    <div className="p-4 rounded-lg shadow-md">
+        <h1 className="text-xl font-bold">Search for a car</h1>
+        <div className="form-control">
+            <select className="select select-bordered">
+            <option value="">Select Type</option>
+                {types.map((type) => (
+                <option key={type.TypeID} value={type.TypeID}>
+                    {type.TypeName}
+                </option>
+                ))}
+            </select>
         </div>
-    );
+
+        <div className="form-control">
+            <select className="select select-bordered">
+            <option value="">Select Sub Type</option>
+                {subTypes.map((subType) => (
+                <option key={subType.SubTypeID} value={subType.SubTypeID}>
+                    {subType.Name}
+                </option>
+                ))}
+            </select>
+        </div>
+
+        <div className="form-control">
+            <select
+                className="select select-bordered"
+                value={selectedMaker}
+                onChange={(e) => setSelectedMaker(e.target.value)}
+            >
+                <option value="">Select Brand</option>
+                {makers.map((maker) => (
+                <option key={maker.MakeID} value={maker.MakeID}>
+                    {maker.MakeName}
+                </option>
+                ))}
+            </select>
+        </div>
+
+        <div className="form-control">
+            <select className="select select-bordered" disabled={!selectedMaker}>
+                <option value="">Select Model</option>
+                {models.map((model) => (
+                <option key={model.ModelID} value={model.ModelID}>
+                    {model.ModelName}
+                </option>
+                ))}
+            </select>
+        </div>
+
+        <div className="mb-4">
+            <label className="block font-semibold mb-1">Model Year</label>
+            <div className="flex gap-2">
+                <select className="select select-bordered w-1/2" value={minYear} onChange={(e) => setMinYear(e.target.value)}>
+                    <option value="">Minimum</option>
+                    {years.map((year) => (
+                    <option key={year} value={year}>{year}</option>
+                    ))}
+                </select>
+                <select className="select select-bordered w-1/2" value={maxYear} onChange={(e) => setMaxYear(e.target.value)}>
+                    <option value="">Maximum</option>
+                    {years.map((year) => (
+                    <option key={year} value={year}>{year}</option>
+                    ))}
+                </select>
+            </div>
+        </div>
+
+        <div className="mb-6">
+            <label className="block font-semibold mb-2">Mileage</label>
+            <div className="text-gray-500 text-sm mb-2">
+            {mileage[0].toLocaleString()} km - {mileage[1].toLocaleString()} km
+            </div>
+            <Range
+            step={5000}
+            min={0}
+            max={500000}
+            values={mileage}
+            onChange={(values) => setMileage(values)}
+            renderTrack={({ props, children }) => (
+                <div {...props} className="h-2 bg-base-content rounded-full relative">
+                {children}
+                </div>
+            )}
+            renderThumb={({ props, index }) => (
+                <div
+                {...props}
+                className="w-5 h-5 bg-primary rounded-full border-2 border-primary-content shadow cursor-pointer"
+                />
+            )}
+            />
+        </div>
+
+        <div className="mb-6">
+        <label className="block font-semibold mb-2">Price</label>
+        <div className="text-gray-500 text-sm mb-2">
+            {price[0].toLocaleString()} € - {price[1].toLocaleString()} €
+        </div>
+        <Range
+            step={1000}
+            min={0}
+            max={100000}
+            values={price}
+            onChange={(values) => setPrice(values)}
+            renderTrack={({ props, children }) => (
+            <div {...props} className="h-2 bg-base-content rounded-full relative">
+                {children}
+            </div>
+            )}
+            renderThumb={({ props, index }) => (
+            <div
+                {...props}
+                className="w-5 h-5 bg-primary rounded-full border-2 border-primary-content shadow cursor-pointer"
+            />
+            )}
+        />
+        </div>
+
+        <button className="btn btn-primary w-full mt-4">Search</button>
+    </div>
+  );
 };
 
 export default Search;

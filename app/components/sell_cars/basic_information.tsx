@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 
 const BasicInformationForm: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false); // Toggle state
+  const [isOpen, setIsOpen] = useState(true); // Toggle state
 
   return (
     <div className="max-w-3xl mx-auto">
@@ -18,7 +18,6 @@ const BasicInformationForm: React.FC = () => {
               <label className="label">Vehicle type *</label>
               <select className="select select-bordered w-full" defaultValue="Car">
                 <option>Car</option>
-                <option>Motorcycle</option>
                 <option>Truck</option>
                 <option>Van</option>
               </select>

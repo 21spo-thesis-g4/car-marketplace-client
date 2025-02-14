@@ -6,11 +6,11 @@ export default function Home() {
   return (
     <main className="flex flex-col items-center">
       <Hero />
-      <div className="container flex w-4/5 justify-center mt-4 -translate-y-56">
-        <div className="w-1/5">
+      <div className="container flex w-3/5 justify-center -translate-y-32 bg-black bg-opacity-20">
+        <div className="w-1/3">
           <SearchBox />
         </div>
-        <div className="w-3/5">
+        <div className="w-2/3">
           <NewCars />
         </div>
       </div>

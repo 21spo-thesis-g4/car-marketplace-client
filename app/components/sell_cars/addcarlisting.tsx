@@ -7,7 +7,7 @@ export default function BasicAdCard() {
   return (
     <div className="card w-80 bg-base-100 shadow-xl p-4">
       <div className="card-body">
-        <div className="badge badge-success text-white mb-2">Basic</div>
+        <div className="badge badge-success mb-2">Basic</div>
         <h2 className="card-title text-xl font-bold mb-4">
           Basic listing on CarNet
         </h2>
