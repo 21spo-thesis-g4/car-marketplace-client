@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { Range } from 'react-range';
+import BrandModel from "./sell_cars/options/brand_model_comp";
 
 interface VehicleType {
   TypeID: number;
@@ -12,27 +13,13 @@ interface SubType {
   Name: string;
 }
 
-interface Maker {
-  MakeID: number;
-  MakeName: string;
-}
-
-interface Model {
-  ModelID: number;
-  ModelName: string;
-}
-
 const Search: React.FC = () => {
   const [types, setTypes] = useState<VehicleType[]>([]);
   const [subTypes, setSubTypes] = useState<SubType[]>([]);
-  const [makers, setMakers] = useState<Maker[]>([]);
-  const [models, setModels] = useState<Model[]>([]);
   const [minYear, setMinYear] = useState("");
   const [maxYear, setMaxYear] = useState("");
   const [mileage, setMileage] = useState([0, 500000]);
   const [price, setPrice] = useState([0, 100000]);
-
-  const [selectedMaker, setSelectedMaker] = useState<string>("");
 
   const years = Array.from({ length: 60 }, (_, i) => (2025 - i).toString());
 
@@ -69,42 +56,6 @@ const Search: React.FC = () => {
 
     fetchSubTypes();
   }, []);
-
-  // Fetch makers
-  useEffect(() => {
-    const fetchMakers = async () => {
-      try {
-        const response = await fetch("http://localhost:4000/api/options/makers");
-        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-
-        const data: Maker[] = await response.json();
-        setMakers(data);
-      } catch (error) {
-        console.error("Failed to fetch makers:", error);
-      }
-    };
-
-    fetchMakers();
-  }, []);
-
-  // Fetch models
-  useEffect(() => {
-    if (!selectedMaker) return;
-
-    const fetchModels = async () => {
-      try {
-        const response = await fetch(`http://localhost:4000/api/options/models/${selectedMaker}`);
-        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-
-        const data: Model[] = await response.json();
-        setModels(data);
-      } catch (error) {
-        console.error("Failed to fetch models:", error);
-      }
-    };
-
-    fetchModels();
-  }, [selectedMaker]);
   
   return (
     <div className="p-4 rounded-lg shadow-md">
@@ -131,31 +82,7 @@ const Search: React.FC = () => {
             </select>
         </div>
 
-        <div className="form-control">
-            <select
-                className="select select-bordered"
-                value={selectedMaker}
-                onChange={(e) => setSelectedMaker(e.target.value)}
-            >
-                <option value="">Select Brand</option>
-                {makers.map((maker) => (
-                <option key={maker.MakeID} value={maker.MakeID}>
-                    {maker.MakeName}
-                </option>
-                ))}
-            </select>
-        </div>
-
-        <div className="form-control">
-            <select className="select select-bordered" disabled={!selectedMaker}>
-                <option value="">Select Model</option>
-                {models.map((model) => (
-                <option key={model.ModelID} value={model.ModelID}>
-                    {model.ModelName}
-                </option>
-                ))}
-            </select>
-        </div>
+        <BrandModel />
 
         <div className="mb-4">
             <label className="block font-semibold mb-1">Model Year</label>
@@ -176,28 +103,32 @@ const Search: React.FC = () => {
         </div>
 
         <div className="mb-6">
-            <label className="block font-semibold mb-2">Mileage</label>
-            <div className="text-gray-500 text-sm mb-2">
-            {mileage[0].toLocaleString()} km - {mileage[1].toLocaleString()} km
-            </div>
-            <Range
-            step={5000}
-            min={0}
-            max={500000}
-            values={mileage}
-            onChange={(values) => setMileage(values)}
-            renderTrack={({ props, children }) => (
-                <div {...props} className="h-2 bg-base-content rounded-full relative">
-                {children}
-                </div>
-            )}
-            renderThumb={({ props, index }) => (
-                <div
-                {...props}
-                className="w-5 h-5 bg-primary rounded-full border-2 border-primary-content shadow cursor-pointer"
-                />
-            )}
+        <label className="block font-semibold mb-2">Mileage</label>
+        <div className="text-gray-500 text-sm mb-2">
+          {mileage[0].toLocaleString()} km - {mileage[1].toLocaleString()} km
+        </div>
+        <Range
+        step={5000}
+        min={0}
+        max={500000}
+        values={mileage}
+        onChange={(values) => setMileage(values)}
+        renderTrack={({ props, children }) => (
+          <div {...props} className="h-2 bg-base-content rounded-full relative">
+            {children}
+          </div>
+        )}
+        renderThumb={({ props, index }) => {
+          const { key, ...restProps } = props;
+          return (
+            <div
+              key={`thumb-${index}`}
+              {...restProps}
+              className="w-5 h-5 bg-primary rounded-full border-2 border-primary-content shadow cursor-pointer"
             />
+          );
+        }}
+      />
         </div>
 
         <div className="mb-6">
