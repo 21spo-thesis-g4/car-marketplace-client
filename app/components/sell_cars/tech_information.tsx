@@ -2,28 +2,40 @@
 import React, { useState } from "react";
 
 const TechnInformation: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false); // Toggle state
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="max-w-3xl mx-auto">
+    <div className="max-w-5xl mx-auto">
       <div className="collapse collapse-arrow bg-base-100 shadow-md">
-        <input type="checkbox" checked={isOpen} onChange={() => setIsOpen(!isOpen)} />
+        <input
+          type="checkbox"
+          checked={isOpen}
+          onChange={() => setIsOpen(!isOpen)}
+        />
         <div className="collapse-title text-xl font-bold border-b pb-2">
           Technical Information
         </div>
-        <div className="collapse-content space-y-4">
-          {/* Form Fields */}
-          <form className="space-y-4 p-4">
+
+        <div className="collapse-content p-1">
+          <form className="space-y-4 max-w-3xl mx-auto">
             {/* Mileage */}
-            <div className="form-control">
-              <label className="label">Mileage (driven km) *</label>
-              <input type="number" className="input input-bordered w-full" placeholder="Enter mileage" />
+            <div className="flex items-center gap-4">
+              <label className="min-w-[10rem] font-semibold">
+                Mileage (driven km) *
+              </label>
+              <input
+                type="number"
+                className="input input-accent w-full"
+                placeholder="Enter mileage"
+              />
             </div>
 
             {/* Power Type */}
-            <div className="form-control">
-              <label className="label">Power Type *</label>
-              <select className="select select-bordered w-full">
+            <div className="flex items-center gap-4">
+              <label className="min-w-[10rem] font-semibold">
+                Power Type *
+              </label>
+              <select className="select select-accent w-full">
                 <option>Select Power type</option>
                 <option>Petrol</option>
                 <option>Diesel</option>
@@ -33,9 +45,11 @@ const TechnInformation: React.FC = () => {
             </div>
 
             {/* Engine Size */}
-            <div className="form-control">
-              <label className="label">Engine Size *</label>
-              <select className="select select-bordered w-full">
+            <div className="flex items-center gap-4">
+              <label className="min-w-[10rem] font-semibold">
+                Engine Size *
+              </label>
+              <select className="select select-accent w-full">
                 <option>Select Engine size</option>
                 <option>1.0L</option>
                 <option>1.6L</option>
@@ -45,9 +59,11 @@ const TechnInformation: React.FC = () => {
             </div>
 
             {/* Drive Type */}
-            <div className="form-control">
-              <label className="label">Drive Type *</label>
-              <select className="select select-bordered w-full">
+            <div className="flex items-center gap-4">
+              <label className="min-w-[10rem] font-semibold">
+                Drive Type *
+              </label>
+              <select className="select select-accent w-full">
                 <option>Select Drive type</option>
                 <option>Front-Wheel Drive</option>
                 <option>Rear-Wheel Drive</option>
@@ -56,19 +72,23 @@ const TechnInformation: React.FC = () => {
             </div>
 
             {/* Gearbox Type */}
-            <div className="form-control">
-              <label className="label">Gearbox Type *</label>
-              <select className="select select-bordered w-full">
+            <div className="flex items-center gap-4">
+              <label className="min-w-[10rem] font-semibold">
+                Gearbox Type *
+              </label>
+              <select className="select select-accent w-full">
                 <option>Select Gearbox type</option>
                 <option>Manual</option>
                 <option>Automatic</option>
               </select>
             </div>
 
-            {/* No. of Persons */}
-            <div className="form-control">
-              <label className="label">No. of persons</label>
-              <select className="select select-bordered w-full">
+            {/* No. of persons */}
+            <div className="flex items-center gap-4">
+              <label className="min-w-[10rem] font-semibold">
+                No. of persons
+              </label>
+              <select className="select select-accent w-full">
                 <option>Select No. of persons</option>
                 {[...Array(10)].map((_, i) => (
                   <option key={i}>{i + 1}</option>
@@ -76,10 +96,12 @@ const TechnInformation: React.FC = () => {
               </select>
             </div>
 
-            {/* No. of Doors */}
-            <div className="form-control">
-              <label className="label">No. of doors</label>
-              <select className="select select-bordered w-full">
+            {/* No. of doors */}
+            <div className="flex items-center gap-4">
+              <label className="min-w-[10rem] font-semibold">
+                No. of doors
+              </label>
+              <select className="select select-accent w-full">
                 <option>Select No. of doors</option>
                 {[2, 3, 4, 5].map((num) => (
                   <option key={num}>{num}</option>
@@ -88,31 +110,53 @@ const TechnInformation: React.FC = () => {
             </div>
 
             {/* Power */}
-            <div className="form-control">
-              <label className="label">Power</label>
-              <input type="number" className="input input-bordered w-full" placeholder="Enter power" />
+            <div className="flex items-center gap-4">
+              <label className="min-w-[10rem] font-semibold">Power</label>
+              <input
+                type="number"
+                className="input input-accent w-full"
+                placeholder="Enter power"
+              />
             </div>
 
-            {/* Fuel Consumption */}
-            <h3 className="font-semibold">Fuel Consumption</h3>
+            {/* Fuel Consumption Section */}
+            <h3 className="font-semibold mt-4">Fuel Consumption</h3>
             {["urban", "road", "combined"].map((type) => (
-              <div key={type} className="form-control">
-                <label className="label">{type.charAt(0).toUpperCase() + type.slice(1)} (L/100km)</label>
-                <input type="number" className="input input-bordered w-full" placeholder="Enter fuel consumption" />
+              <div key={type} className="flex items-center gap-4">
+                <label className="min-w-[10rem] font-semibold">
+                  {type.charAt(0).toUpperCase() + type.slice(1)} (L/100km)
+                </label>
+                <input
+                  type="number"
+                  className="input input-accent w-full"
+                  placeholder="Enter fuel consumption"
+                />
               </div>
             ))}
 
-            {/* Weights */}
-            <h3 className="font-semibold">Weight (Check your car registration certificate)</h3>
-            {["Curb weight", "Gross weight", "Tow weight with brakes", "Tow weight without brakes"].map((label) => (
-              <div key={label} className="form-control">
-                <label className="label">{label} (kg)</label>
-                <input type="number" className="input input-bordered w-full" placeholder="Enter weight" />
+            {/* Weight Section */}
+            <h3 className="font-semibold mt-4">
+              Weight (Check your car registration certificate)
+            </h3>
+            {[
+              "Curb weight",
+              "Gross weight",
+              "Tow weight with brakes",
+              "Tow weight without brakes",
+            ].map((label) => (
+              <div key={label} className="flex items-center gap-4">
+                <label className="min-w-[16rem] font-semibold whitespace-nowrap">
+                  {label} (kg)
+                </label>
+                <input
+                  type="number"
+                  className="input input-accent w-full"
+                  placeholder="Enter weight"
+                />
               </div>
             ))}
 
-            {/* Submit Button */}
-            <button type="submit" className="btn btn-primary w-full mt-4">
+            <button type="submit" className="btn btn-accent w-full mt-4">
               Continue
             </button>
           </form>

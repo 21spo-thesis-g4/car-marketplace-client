@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { useRouter } from "next/navigation";
 
 export default function BasicAdCard() {
@@ -7,30 +7,30 @@ export default function BasicAdCard() {
   return (
     <div className="card w-80 bg-base-100 shadow-xl p-4">
       <div className="card-body">
-        <div className="badge badge-success mb-2">Basic</div>
+        <div className="badge badge-accent mb-2">Basic</div>
         <h2 className="card-title text-xl font-bold mb-4">
           Basic listing on CarNet
         </h2>
         <ul className="space-y-2">
           <li className="flex items-start">
-          <CheckIcon className="mr-2 text-green-600" />
+            <CheckIcon className="mr-2 text-accent" />
             Free of charge
           </li>
           <li className="flex items-start">
-          <CheckIcon className="mr-2 text-green-600" />
+            <CheckIcon className="mr-2 text-accent" />
             Most interested buyers
           </li>
           <li className="flex items-start">
-          <CheckIcon className="mr-2 text-green-600" />
+            <CheckIcon className="mr-2 text-accent" />
             You're likely to get the best price
           </li>
         </ul>
         <div className="card-actions mt-4">
-          <button 
-            className="btn btn-success w-full"
+          <button
+            className="btn btn-accent w-full"
             onClick={() => {
               router.push("/new-listing");
-            }} 
+            }}
           >
             Sell your car
           </button>

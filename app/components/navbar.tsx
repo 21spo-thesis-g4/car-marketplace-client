@@ -4,7 +4,7 @@ import Image from 'next/image'
 
 const Navbar: React.FC = () => {
     return (
-        <nav className="navbar">
+        <nav className="navbar bg-accent ">
             <div className="navbar-container">
                 <div className="navbar-logo">
                     <Link href="/">
