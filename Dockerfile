@@ -1,48 +1,42 @@
 # ===============================
 # STAGE 1: Build
 # ===============================
-FROM node:18 AS builder
+FROM node:18-alpine AS builder
 
-# Sovelluksen työhakemisto
+# Set the working directory inside the container
 WORKDIR /app
 
-# Kopioi riippuvuuksien hallinta -tiedostot
+# Copy package.json and package-lock.json
 COPY package*.json ./
 
-# Asenna riippuvuudet
-# (Tailwind, TypeScript jne. asentuvat tässä vaiheessa)
+# Install dependencies
 RUN npm ci
 
-# Kopioi muu sovelluskoodi
+# Copy the rest of the application source code
 COPY . .
 
-# Rakenna Next.js-sovellus (luo .next-hakemiston)
+# Build the Next.js application (creates the .next directory)
 RUN npm run build
 
 # ===============================
 # STAGE 2: Production
 # ===============================
-FROM node:18-slim
+FROM node:18-alpine
 
 WORKDIR /app
 
-# Kopioi package.json -tiedostot
-COPY package*.json ./
-
-# Asenna vain tuotantoriippuvuudet
-RUN npm ci --omit=dev
-
-# Kopioi buildatun Next.js-sovelluksen tulosteet
+# Copy only the necessary files
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package*.json ./
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/next.config.ts ./next.config.ts
-# (Lisää muita tiedostoja jos tarvii, esim. .env.production)
 
-# Ympäristömuuttujat
+# Set environment variables
 ENV NODE_ENV=production
 
-# Portti
+# Expose port 3000
 EXPOSE 3000
 
-# Ajovaiheen käynnistyskomento
+# Start the application
 CMD ["npm", "run", "start"]
