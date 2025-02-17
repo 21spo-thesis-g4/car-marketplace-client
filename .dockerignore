@@ -3,18 +3,22 @@ node_modules
 npm-debug.log
 yarn.lock
 
-# Next.js build output (jos monivaihebuild hoitaa sen)
+# Next.js build output
 .next
 out
 
-# VSC/IDE stuff
+# VS Code / IDE-related files
 .vscode
 .idea
 
-# Git
+# Git-related files
 .git
 .gitignore
 
-# Dockerfile, if you don't want it in the context
+# Docker-related files
 Dockerfile
 .dockerignore
+
+# Misc
+*.log
+coverage
