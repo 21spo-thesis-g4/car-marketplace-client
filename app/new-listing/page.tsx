@@ -8,7 +8,7 @@ function New_Listing() {
   return (
     <div>
       <div className="max-w-5xl mx-auto card bg-base-100 shadow-md p-2">
-        <h1 className="text-4xl font-bold">Leave listing</h1>
+        <h1 className="text-4xl font-bold">Leave a listing</h1>
         <p className="text-lg mt-2">
           {" "}
           Listing is free of charge for individuals.

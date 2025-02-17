@@ -30,14 +30,14 @@ const ImagesSection: React.FC = () => {
           checked={isOpen}
           onChange={() => setIsOpen(!isOpen)}
         />
-        <div className="collapse-title text-xl font-bold border-b">Kuvat</div>
+        <div className="collapse-title text-xl font-bold border-b">Images</div>
 
         <div className="collapse-content p-1">
           <form className="max-w-3xl mx-auto space-y-4" onSubmit={handleSubmit}>
             <div className="flex items-center gap-4 mb-4">
-              <label className="w-16 font-semibold">Kuvat *</label>
+              <label className="w-16 font-semibold">Images *</label>
               <label className="btn btn-primary">
-                Valitse kuvat
+                Select images
                 <input
                   type="file"
                   multiple
@@ -47,12 +47,12 @@ const ImagesSection: React.FC = () => {
                 />
               </label>
               <span className="text-sm text-gray-600">
-                Lataa yhteensä 1–24 kuvaa.
+                Upload 1-12 images
               </span>
             </div>
 
-            <div className="grid grid-cols-4 gap-4 mb-4">
-              {Array.from({ length: 4 }).map((_, i) => (
+            <div className="grid grid-cols-5 gap-4 mb-4">
+              {Array.from({ length: 5 }).map((_, i) => (
                 <div
                   key={i}
                   className="w-full aspect-square bg-gray-100 border border-gray-300
@@ -64,11 +64,11 @@ const ImagesSection: React.FC = () => {
             </div>
 
             <p className="text-sm text-gray-500 mb-4">
-              Lataathan vähintään yhden kuvan
+              Upload atleast 1 image
             </p>
 
             <button type="submit" className="btn btn-primary px-8">
-              Jatka eteenpäin
+              Create listing
             </button>
           </form>
         </div>
