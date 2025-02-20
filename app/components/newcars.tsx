@@ -44,9 +44,6 @@ const NewCars = () => {
             <p>
               ${car.Price}, {car.Year}
             </p>
-            <p className="text-sm text-gray-500">
-              {car.MakeName} {/* or any other fields */}
-            </p>
           </div>
         ))}
       </div>

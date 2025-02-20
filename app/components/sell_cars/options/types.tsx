@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 interface VehicleType {
   TypeID: number;
@@ -12,10 +12,22 @@ interface SubType {
 }
 
 interface SearchProps {
-  className?: string; // allow parent to pass a custom class
+  selectedType: string;
+  onTypeChange: (typeId: string) => void;
+
+  selectedSubType: string;
+  onSubTypeChange: (subTypeId: string) => void;
+
+  className?: string;
 }
 
-const Search: React.FC<SearchProps> = ({ className = "" }) => {
+const Search: React.FC<SearchProps> = ({
+  selectedType,
+  onTypeChange,
+  selectedSubType,
+  onSubTypeChange,
+  className = "",
+}) => {
   const [types, setTypes] = useState<VehicleType[]>([]);
   const [subTypes, setSubTypes] = useState<SubType[]>([]);
 
@@ -23,7 +35,9 @@ const Search: React.FC<SearchProps> = ({ className = "" }) => {
   useEffect(() => {
     const fetchTypes = async () => {
       try {
-        const response = await fetch("http://localhost:4000/api/options/vehicletypes");
+        const response = await fetch(
+          "http://localhost:4000/api/options/vehicletypes"
+        );
         if (!response.ok)
           throw new Error(`HTTP error! Status: ${response.status}`);
 
@@ -41,7 +55,9 @@ const Search: React.FC<SearchProps> = ({ className = "" }) => {
   useEffect(() => {
     const fetchSubTypes = async () => {
       try {
-        const response = await fetch("http://localhost:4000/api/options/subtypes");
+        const response = await fetch(
+          "http://localhost:4000/api/options/subtypes"
+        );
         if (!response.ok)
           throw new Error(`HTTP error! Status: ${response.status}`);
 
@@ -56,9 +72,14 @@ const Search: React.FC<SearchProps> = ({ className = "" }) => {
   }, []);
 
   return (
-    <div className={` ${className}`}>
-      <div className="form-control">
-        <select className="select select-accent w-full">
+    <div className={className}>
+      {/* Select Type (fully controlled by parent) */}
+      <div className="form-control mb-2">
+        <select
+          className="select select-accent w-full"
+          value={selectedType}
+          onChange={(e) => onTypeChange(e.target.value)}
+        >
           <option value="">Select Type</option>
           {types.map((type) => (
             <option key={type.TypeID} value={type.TypeID}>
@@ -68,8 +89,14 @@ const Search: React.FC<SearchProps> = ({ className = "" }) => {
         </select>
       </div>
 
+      {/* Select SubType (fully controlled by parent) */}
       <div className="form-control">
-        <select className="select select-accent w-full">
+        <select
+          className="select select-accent w-full"
+          value={selectedSubType}
+          onChange={(e) => onSubTypeChange(e.target.value)}
+          disabled={!selectedType} // disable if no type selected
+        >
           <option value="">Select Sub Type</option>
           {subTypes.map((subType) => (
             <option key={subType.SubTypeID} value={subType.SubTypeID}>

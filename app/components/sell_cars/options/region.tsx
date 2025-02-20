@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 interface Region {
   RegionID: number;
@@ -8,10 +8,16 @@ interface Region {
 }
 
 interface RegionsProps {
-  className?: string; // allow parent to pass a custom class
+  selectedRegion: string;
+  onRegionChange: (regionId: string) => void;
+  className?: string;
 }
 
-const Search: React.FC<RegionsProps> = ({ className = "" }) => {
+const Regions: React.FC<RegionsProps> = ({
+  selectedRegion,
+  onRegionChange,
+  className = "",
+}) => {
   const [regions, setRegions] = useState<Region[]>([]);
 
   // Fetch regions
@@ -21,9 +27,9 @@ const Search: React.FC<RegionsProps> = ({ className = "" }) => {
         const response = await fetch(
           "http://localhost:4000/api/options/regions"
         );
-        if (!response.ok)
+        if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
-
+        }
         const data: Region[] = await response.json();
         setRegions(data);
       } catch (error) {
@@ -35,9 +41,13 @@ const Search: React.FC<RegionsProps> = ({ className = "" }) => {
   }, []);
 
   return (
-    <div className={`${className}`}>
+    <div className={className}>
       <div className="form-control">
-        <select className="select select-accent w-full">
+        <select
+          className="select select-accent w-full"
+          value={selectedRegion}
+          onChange={(e) => onRegionChange(e.target.value)}
+        >
           <option value="">Select Region</option>
           {regions.map((region) => (
             <option key={region.RegionID} value={region.RegionID}>
@@ -50,4 +60,4 @@ const Search: React.FC<RegionsProps> = ({ className = "" }) => {
   );
 };
 
-export default Search;
+export default Regions;

@@ -39,10 +39,10 @@ const LoginPage: React.FC = () => {
     e.preventDefault();
     setMessage('');
     setError('');
-    console.log('Login button clicked');
+    //console.log('Login button clicked');
     try {
       const response = await loginUser(email, password);
-      console.log('API response:', response);
+      //console.log('API response:', response);
       setMessage('Login successful');
       localStorage.setItem('token', response.token); // Store JWT in local storage
       router.push('/profile');
