@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import BrandModel from "./options/brand_model_comp";
 import Types from "./options/types";
+import Colors from "./options/colors";
 
 const BasicInformationForm: React.FC = () => {
   const [isOpen, setIsOpen] = useState(true);
@@ -21,19 +22,23 @@ const BasicInformationForm: React.FC = () => {
         <div className="collapse-content p-1">
           <form className="max-w-3xl mx-auto space-y-4">
             <div className="flex items-center gap-4">
-              <div className="min-w-[8rem] font-semibold">Types *</div>
+              <div className="min-w-[12rem] font-semibold text-right">
+                Types *
+              </div>
               <Types className="flex-1" />
             </div>
 
             <div className="flex items-center gap-4">
-              <div className="min-w-[8rem] font-semibold">
+              <div className="min-w-[12rem] font-semibold text-right">
                 Brand &amp; Model *
               </div>
               <BrandModel className="flex-1" />
             </div>
 
             <div className="flex items-center gap-4">
-              <div className="min-w-[8rem] font-semibold">Year model *</div>
+              <div className="min-w-[12rem] font-semibold text-right">
+                Year model *
+              </div>
               <select className="select select-accent w-full" defaultValue="">
                 <option disabled value="">
                   Select year model
@@ -50,7 +55,9 @@ const BasicInformationForm: React.FC = () => {
             </div>
 
             <div className="flex items-center gap-4">
-              <div className="min-w-[8rem] font-semibold">Engine model</div>
+              <div className="min-w-[12rem] font-semibold text-right">
+                Engine model
+              </div>
               <input
                 type="text"
                 className="input input-accent w-full"
@@ -59,7 +66,9 @@ const BasicInformationForm: React.FC = () => {
             </div>
 
             <div className="flex items-center gap-4">
-              <div className="min-w-[8rem] font-semibold">Road capacity</div>
+              <div className="min-w-[12rem] font-semibold text-right">
+                Road capacity
+              </div>
               <select className="select select-accent w-full">
                 <option>Roadworthy</option>
                 <option>Not roadworthy</option>
@@ -67,10 +76,12 @@ const BasicInformationForm: React.FC = () => {
             </div>
 
             <div className="flex items-center gap-4">
-              <div className="min-w-[8rem] font-semibold">Reg. No *</div>
+              <div className="min-w-[12rem] font-semibold text-right">
+                Reg. No *
+              </div>
               <input
                 type="text"
-                className="input input-accent w-full"
+                className="input input-accent w-[28rem]"
                 placeholder="example abc-123"
               />
               <label className="flex items-center gap-2">
@@ -80,7 +91,7 @@ const BasicInformationForm: React.FC = () => {
             </div>
 
             <div className="flex items-center gap-4">
-              <div className="min-w-[8rem] font-semibold">VIN</div>
+              <div className="min-w-[12rem] font-semibold text-right">VIN</div>
               <input
                 type="text"
                 className="input input-accent w-full"
@@ -89,7 +100,7 @@ const BasicInformationForm: React.FC = () => {
             </div>
 
             <div className="flex items-center gap-4">
-              <div className="min-w-[8rem] font-semibold">
+              <div className="min-w-[12rem] font-semibold text-right">
                 First registration
               </div>
               <div className="flex gap-2 w-full">
@@ -113,7 +124,9 @@ const BasicInformationForm: React.FC = () => {
             </div>
 
             <div className="flex items-center gap-4">
-              <div className="min-w-[8rem] font-semibold">Inspection date</div>
+              <div className="min-w-[12rem] font-semibold text-right">
+                Inspection date
+              </div>
               <div className="flex gap-2 w-full">
                 <select className="select select-accent w-1/2">
                   <option disabled>Year</option>
@@ -134,7 +147,7 @@ const BasicInformationForm: React.FC = () => {
               </div>
             </div>
 
-            <div className="flex items-center gap-4 translate-x-36">
+            <div className="flex items-center gap-4 translate-x-52">
               <label className="flex items-center gap-2">
                 <input type="checkbox" className="checkbox checkbox-accent" />
                 <span>First service for vehicle coming</span>
@@ -142,7 +155,9 @@ const BasicInformationForm: React.FC = () => {
             </div>
 
             <div className="flex items-center gap-4">
-              <div className="min-w-[8rem] font-semibold">Previous owners</div>
+              <div className="min-w-[12rem] font-semibold text-right">
+                Previous owners
+              </div>
               <select className="select select-accent w-full">
                 <option disabled>Select</option>
                 <option>1</option>
@@ -153,20 +168,16 @@ const BasicInformationForm: React.FC = () => {
             </div>
 
             <div className="flex items-center gap-4">
-              <div className="min-w-[8rem] font-semibold">Color *</div>
-              <div className="flex gap-2 w-full">
-                <select className="select select-accent w-1/2">
-                  <option disabled>Select color</option>
-                  <option>Black</option>
-                </select>
-                <select className="select select-accent w-1/2">
-                  <option disabled>Select color type</option>
-                </select>
+              <div className="min-w-[12rem] font-semibold text-right">
+                Color &amp; Shade *
               </div>
+              <Colors className="flex-1" />
             </div>
 
             <div className="flex items-center gap-4">
-              <div className="min-w-[8rem] font-semibold">Other info</div>
+              <div className="min-w-[12rem] font-semibold text-right">
+                Other info
+              </div>
               <textarea
                 className="textarea textarea-accent w-full"
                 placeholder="Describe your item..."
@@ -174,9 +185,11 @@ const BasicInformationForm: React.FC = () => {
               />
             </div>
 
-            <button type="submit" className="btn btn-accent w-full mt-4">
-              Continue
-            </button>
+            <div className="flex justify-center mt-4">
+              <button type="submit" className="btn btn-accent w-1/4">
+                Continue
+              </button>
+            </div>
           </form>
         </div>
       </div>

@@ -4,15 +4,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/*
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #c1ca3b;
-    --foreground: #27272a;
-  }
-}
-*/
-
 body {
   font-family: "Open Sans","Quicksand", Arial, Helvetica, sans-serif;
   margin: 0;

@@ -34,38 +34,39 @@ const ImagesSection: React.FC = () => {
 
         <div className="collapse-content p-1">
           <form className="max-w-3xl mx-auto space-y-4" onSubmit={handleSubmit}>
-            <div className="flex items-center gap-4 mb-4">
-              <label className="w-16 font-semibold">Images *</label>
-              <label className="btn btn-primary">
-                Select images
-                <input
-                  type="file"
-                  multiple
-                  accept="image/*"
-                  className="hidden"
-                  onChange={handleFileChange}
-                />
-              </label>
-              <span className="text-sm text-gray-600">
-                Upload 1-12 images
-              </span>
+            <div className="flex items-center gap-4">
+              <label className="min-w-[12rem] font-semibold">Images *</label>
+              <div className="flex items-center gap-4">
+                <label className="btn btn-primary relative overflow-hidden">
+                  Select images
+                  <input
+                    type="file"
+                    multiple
+                    accept="image/*"
+                    className="absolute inset-0 opacity-0 cursor-pointer"
+                    onChange={handleFileChange}
+                  />
+                </label>
+                <span className="text-sm text-gray-600">
+                  Upload 1–12 images
+                </span>
+              </div>
             </div>
 
-            <div className="grid grid-cols-5 gap-4 mb-4">
+            <div className="grid grid-cols-5 gap-4">
               {Array.from({ length: 5 }).map((_, i) => (
                 <div
                   key={i}
-                  className="w-full aspect-square bg-gray-100 border border-gray-300
-                flex items-center justify-center text-gray-400"
+                  className="w-full aspect-square bg-gray-100 border 
+                             border-gray-300 flex items-center justify-center 
+                             text-gray-400"
                 >
                   Car {i + 1}
                 </div>
               ))}
             </div>
 
-            <p className="text-sm text-gray-500 mb-4">
-              Upload atleast 1 image
-            </p>
+            <p className="text-sm text-gray-500">Upload at least 1 image</p>
 
             <button type="submit" className="btn btn-primary px-8">
               Create listing

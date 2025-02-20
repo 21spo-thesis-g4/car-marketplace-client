@@ -5,7 +5,7 @@ import HeroCar from '../../public/hero.png';
 const Hero: React.FC = () => {
     return (
         <div className="hero flex items-center justify-center">
-            <Image src={HeroCar} alt="CarNet" className="w-full"/>
+            <Image priority={true} src={HeroCar} alt="CarNet" className="w-full"/>
         </div>
     );
 };

@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import Regions from "./options/region";
 
 const PriceLocation: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -36,7 +37,7 @@ const PriceLocation: React.FC = () => {
         <div className="collapse-content p-1">
           <form className="max-w-3xl mx-auto space-y-4" onSubmit={handleSubmit}>
             <div className="flex items-center gap-4">
-              <label className="min-w-[9rem] font-semibold">
+              <label className="min-w-[12rem] font-semibold text-right">
                 Asking price *
               </label>
               <div className="flex items-center gap-2 w-full">
@@ -53,7 +54,7 @@ const PriceLocation: React.FC = () => {
             </div>
 
             <div className="flex items-center gap-4">
-              <label className="min-w-[9rem] font-semibold">Not priced</label>
+              <label className="min-w-[12rem] font-semibold text-right">Not priced</label>
               <div className="w-full flex items-center">
                 <input
                   type="checkbox"
@@ -68,7 +69,7 @@ const PriceLocation: React.FC = () => {
             </div>
 
             <div className="flex items-center gap-4">
-              <label className="min-w-[9rem] font-semibold">
+              <label className="min-w-[12rem] font-semibold text-right">
                 VAT deductible
               </label>
               <div className="w-full flex items-center">
@@ -82,7 +83,7 @@ const PriceLocation: React.FC = () => {
             </div>
 
             <div className="flex items-center gap-4">
-              <label className="min-w-[9rem] font-semibold">Location *</label>
+              <label className="min-w-[12rem] font-semibold text-right">Location *</label>
               <select
                 className="select select-accent w-full"
                 value={location}
@@ -91,7 +92,14 @@ const PriceLocation: React.FC = () => {
             </div>
 
             <div className="flex items-center gap-4">
-              <label className="min-w-[9rem] font-semibold">
+              <div className="min-w-[12rem] font-semibold text-right">
+                Color &amp; Shade *
+              </div>
+              <Regions className="flex-1" />
+            </div>
+
+            <div className="flex items-center gap-4">
+              <label className="min-w-[12rem] font-semibold text-right">
                 Show exact location
               </label>
               <div className="w-full flex items-center">
@@ -108,9 +116,11 @@ const PriceLocation: React.FC = () => {
               Please fill the mandatory information
             </p>
 
-            <button type="submit" className="btn btn-accent w-full mt-4">
-              Continue
-            </button>
+            <div className="flex justify-center mt-4">
+              <button type="submit" className="btn btn-accent w-1/4">
+                Continue
+              </button>
+            </div>
           </form>
         </div>
       </div>

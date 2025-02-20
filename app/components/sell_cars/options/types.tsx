@@ -56,8 +56,7 @@ const Search: React.FC<SearchProps> = ({ className = "" }) => {
   }, []);
 
   return (
-    <div className={`space-y-2 ${className}`}>
-      {/* Select Vehicle Type */}
+    <div className={` ${className}`}>
       <div className="form-control">
         <select className="select select-accent w-full">
           <option value="">Select Type</option>
@@ -69,7 +68,6 @@ const Search: React.FC<SearchProps> = ({ className = "" }) => {
         </select>
       </div>
 
-      {/* Select SubType */}
       <div className="form-control">
         <select className="select select-accent w-full">
           <option value="">Select Sub Type</option>

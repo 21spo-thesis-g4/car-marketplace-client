@@ -13,13 +13,11 @@ const Search: React.FC = () => {
   const years = Array.from({ length: 60 }, (_, i) => (2025 - i).toString());
 
   return (
-    <div className="p-3 rounded-full shadow-md">
+    <div className="p-1 rounded-full shadow-md">
       <h1 className="text-xl font-bold">Search for a car</h1>
-
       <Types />
       <BrandModel />
-
-      <div className="mb-4">
+      <div className="my-2">
         <label className="block font-semibold mb-1">Model Year</label>
         <div className="flex gap-2">
           <select
@@ -49,7 +47,7 @@ const Search: React.FC = () => {
         </div>
       </div>
 
-      <div className="mb-6">
+      <div className="m-4">
         <label className="block font-semibold mb-2">Mileage</label>
         <div className="text-gray-500 text-sm mb-2">
           {mileage[0].toLocaleString()} km - {mileage[1].toLocaleString()} km
@@ -78,7 +76,7 @@ const Search: React.FC = () => {
         />
       </div>
 
-      <div className="mb-6">
+      <div className="m-4">
         <label className="block font-semibold mb-2">Price</label>
         <div className="text-gray-500 text-sm mb-2">
           {price[0].toLocaleString()} € - {price[1].toLocaleString()} €

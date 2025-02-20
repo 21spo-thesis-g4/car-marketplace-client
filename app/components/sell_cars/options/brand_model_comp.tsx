@@ -58,8 +58,7 @@ const BrandModel: React.FC<BrandModelProps> = ({ className = "" }) => {
   }, [selectedMaker]);
 
   return (
-    <div className={`space-y-2 ${className}`}>
-      {/* Select Brand */}
+    <div className={`${className}`}>
       <div className="form-control w-full">
         <select
           className="select select-accent w-full"
@@ -75,7 +74,6 @@ const BrandModel: React.FC<BrandModelProps> = ({ className = "" }) => {
         </select>
       </div>
 
-      {/* Select Model */}
       <div className="form-control w-full">
         <select
           className="select select-accent w-full"
