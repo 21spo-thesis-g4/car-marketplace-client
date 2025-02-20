@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "../styles/globals.css";
 import Navbar from "./components/navbar";
+import ClientConfig from "./components/clientConfig";
 
 export const metadata: Metadata = {
   title: "CarNet",
@@ -16,6 +17,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Navbar />
+         <ClientConfig />
         {children}
       </body>
     </html>
