@@ -1,6 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 
+const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+
 interface VehicleType {
   TypeID: number;
   TypeName: string;
@@ -14,10 +16,8 @@ interface SubType {
 interface SearchProps {
   selectedType: string;
   onTypeChange: (typeId: string) => void;
-
   selectedSubType: string;
   onSubTypeChange: (subTypeId: string) => void;
-
   className?: string;
 }
 
@@ -35,12 +35,10 @@ const Search: React.FC<SearchProps> = ({
   useEffect(() => {
     const fetchTypes = async () => {
       try {
-        const response = await fetch(
-          "http://localhost:4000/api/options/vehicletypes"
-        );
-        if (!response.ok)
+        const response = await fetch(`${apiUrl}/api/options/vehicletypes`);
+        if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
-
+        }
         const data: VehicleType[] = await response.json();
         setTypes(data);
       } catch (error) {
@@ -51,16 +49,14 @@ const Search: React.FC<SearchProps> = ({
     fetchTypes();
   }, []);
 
-  // Fetch sub types
+  // Fetch subtypes
   useEffect(() => {
     const fetchSubTypes = async () => {
       try {
-        const response = await fetch(
-          "http://localhost:4000/api/options/subtypes"
-        );
-        if (!response.ok)
+        const response = await fetch(`${apiUrl}/api/options/subtypes`);
+        if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
-
+        }
         const data: SubType[] = await response.json();
         setSubTypes(data);
       } catch (error) {

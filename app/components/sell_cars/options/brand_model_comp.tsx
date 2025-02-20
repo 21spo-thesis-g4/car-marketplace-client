@@ -1,6 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 
+const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+
 interface Maker {
   MakeID: number;
   MakeName: string;
@@ -14,10 +16,8 @@ interface Model {
 interface BrandModelProps {
   selectedMaker?: string;
   onMakerChange?: (makerId: string) => void;
-
   selectedModel?: string;
   onModelChange?: (modelId: string) => void;
-
   className?: string;
 }
 
@@ -35,9 +35,7 @@ const BrandModel: React.FC<BrandModelProps> = ({
   useEffect(() => {
     const fetchMakers = async () => {
       try {
-        const response = await fetch(
-          "http://localhost:4000/api/options/makers"
-        );
+        const response = await fetch(`${apiUrl}/api/options/makers`);
         if (!response.ok)
           throw new Error(`HTTP error! Status: ${response.status}`);
         const data: Maker[] = await response.json();
@@ -54,9 +52,7 @@ const BrandModel: React.FC<BrandModelProps> = ({
     if (!selectedMaker) return;
     const fetchModels = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:4000/api/options/models/${selectedMaker}`
-        );
+        const response = await fetch(`${apiUrl}/api/options/models/${selectedMaker}`);
         if (!response.ok)
           throw new Error(`HTTP error! Status: ${response.status}`);
         const data: Model[] = await response.json();
