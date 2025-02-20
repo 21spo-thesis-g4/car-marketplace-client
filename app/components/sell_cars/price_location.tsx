@@ -30,7 +30,7 @@ const PriceLocation: React.FC = () => {
           checked={isOpen}
           onChange={() => setIsOpen(!isOpen)}
         />
-        <div className="collapse-title text-xl font-bold border-b">
+        <div className="collapse-title text-md font-bold border-b">
           Price and Location
         </div>
 

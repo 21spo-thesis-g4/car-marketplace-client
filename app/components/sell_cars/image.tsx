@@ -30,7 +30,7 @@ const ImagesSection: React.FC = () => {
           checked={isOpen}
           onChange={() => setIsOpen(!isOpen)}
         />
-        <div className="collapse-title text-xl font-bold border-b">Images</div>
+        <div className="collapse-title text-md font-bold border-b">Images</div>
 
         <div className="collapse-content p-1">
           <form className="max-w-3xl mx-auto space-y-4" onSubmit={handleSubmit}>

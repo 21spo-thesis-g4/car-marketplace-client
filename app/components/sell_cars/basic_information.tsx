@@ -15,7 +15,7 @@ const BasicInformationForm: React.FC = () => {
           checked={isOpen}
           onChange={() => setIsOpen(!isOpen)}
         />
-        <div className="collapse-title text-xl font-bold border-b">
+        <div className="collapse-title text-md font-bold border-b">
           Basic Information
         </div>
 

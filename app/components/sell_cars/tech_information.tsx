@@ -12,7 +12,7 @@ const TechnInformation: React.FC = () => {
           checked={isOpen}
           onChange={() => setIsOpen(!isOpen)}
         />
-        <div className="collapse-title text-xl font-bold border-b pb-2">
+        <div className="collapse-title text-md font-bold border-b pb-2">
           Technical Information
         </div>
 
