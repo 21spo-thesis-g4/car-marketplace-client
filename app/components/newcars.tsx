@@ -11,6 +11,8 @@ interface Car {
   ModelName: string;
 }
 
+const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+
 const NewCars = () => {
   const [cars, setCars] = useState<Car[]>([]);
 
@@ -18,7 +20,7 @@ const NewCars = () => {
     const fetchCars = async () => {
       try {
         // Replace with your actual API URL if needed
-        const res = await fetch("http://localhost:4000/api/options/search");
+        const res = await fetch(`${apiUrl}/api/options/search`);
         if (!res.ok) {
           throw new Error(`Fetch failed with status ${res.status}`);
         }
@@ -40,9 +42,9 @@ const NewCars = () => {
         {cars.map((car) => (
           <div key={car.CarID} className="card shadow-xl p-2">
             <Image src={car1} alt={car.ModelName} />
-            <h2 className="card-title">{car.ModelName}</h2>
+            <h2 className="card-title">{car.MakeName} {car.ModelName}</h2>
             <p>
-              ${car.Price}, {car.Year}
+              €{car.Price.toLocaleString()}, {car.Year}
             </p>
           </div>
         ))}
