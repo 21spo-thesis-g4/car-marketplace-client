@@ -3,9 +3,11 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+
 const loginUser = async (email: string, password: string) => {
     try {
-      const response = await fetch('http://localhost:4000/auth/login', {
+      const response = await fetch(`${API_URL}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -39,10 +41,9 @@ const LoginPage: React.FC = () => {
     e.preventDefault();
     setMessage('');
     setError('');
-    //console.log('Login button clicked');
+
     try {
       const response = await loginUser(email, password);
-      //console.log('API response:', response);
       setMessage('Login successful');
       localStorage.setItem('token', response.token); // Store JWT in local storage
       router.push('/profile');
