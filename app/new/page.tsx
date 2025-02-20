@@ -1,8 +1,5 @@
 import React from "react";
 import Basic from "../components/sell_cars/basic_information";
-import Technical from "../components/sell_cars/tech_information";
-import PriceLocation from "../components/sell_cars/price_location";
-import Image from "../components/sell_cars/image";
 
 function New_Listing() {
   return (
@@ -15,9 +12,6 @@ function New_Listing() {
         </p>
       </div>
       <Basic />
-      <Technical />
-      <PriceLocation />
-      <Image />
     </div>
   );
 }

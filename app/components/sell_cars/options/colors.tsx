@@ -1,34 +1,48 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
-interface Colors {
+interface Color {
   ColorID: number;
   Name: string;
 }
 
-interface ColorShades {
+interface Shade {
   ShadeID: number;
   ShadeName: string;
 }
 
 interface ColorsProps {
-    className?: string; // allow parent to pass a custom class
+  selectedColor: string;
+  onColorChange: (colorId: string) => void;
+
+  selectedShade: string;
+  onShadeChange: (shadeId: string) => void;
+
+  className?: string;
 }
 
-const Search: React.FC<ColorsProps> = ({ className = "" }) => {
-  const [colors, setcolors] = useState<Colors[]>([]);
-  const [colorShades, setColorShades] = useState<ColorShades[]>([]);
+const Colors: React.FC<ColorsProps> = ({
+  selectedColor,
+  onColorChange,
+  selectedShade,
+  onShadeChange,
+  className = "",
+}) => {
+  const [colors, setColors] = useState<Color[]>([]);
+  const [shades, setShades] = useState<Shade[]>([]);
 
-  // Fetch colors
+  // Fetch color list
   useEffect(() => {
     const fetchColors = async () => {
       try {
-        const response = await fetch("http://localhost:4000/api/options/colors");
-        if (!response.ok)
+        const response = await fetch(
+          "http://localhost:4000/api/options/colors"
+        );
+        if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
-
-        const data: Colors[] = await response.json();
-        setcolors(data);
+        }
+        const data: Color[] = await response.json();
+        setColors(data);
       } catch (error) {
         console.error("Failed to fetch colors:", error);
       }
@@ -37,16 +51,18 @@ const Search: React.FC<ColorsProps> = ({ className = "" }) => {
     fetchColors();
   }, []);
 
-  // Fetch color shades
+  // Fetch shades list
   useEffect(() => {
     const fetchColorShades = async () => {
       try {
-        const response = await fetch("http://localhost:4000/api/options/colorshades");
-        if (!response.ok)
+        const response = await fetch(
+          "http://localhost:4000/api/options/colorshades"
+        );
+        if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
-
-        const data: ColorShades[] = await response.json();
-        setColorShades(data);
+        }
+        const data: Shade[] = await response.json();
+        setShades(data);
       } catch (error) {
         console.error("Failed to fetch color shades:", error);
       }
@@ -56,9 +72,18 @@ const Search: React.FC<ColorsProps> = ({ className = "" }) => {
   }, []);
 
   return (
-    <div className={`${className}`}>
-      <div className="form-control">
-        <select className="select select-accent w-full">
+    <div className={className}>
+      {/* Select Color (controlled by parent) */}
+      <div className="form-control mb-2">
+        <select
+          className="select select-accent w-full"
+          value={selectedColor}
+          onChange={(e) => {
+            onColorChange(e.target.value);
+            // Optionally reset shade if color changed
+            onShadeChange("");
+          }}
+        >
           <option value="">Select Color</option>
           {colors.map((color) => (
             <option key={color.ColorID} value={color.ColorID}>
@@ -68,12 +93,18 @@ const Search: React.FC<ColorsProps> = ({ className = "" }) => {
         </select>
       </div>
 
+      {/* Select Shade (controlled by parent) */}
       <div className="form-control">
-        <select className="select select-accent w-full">
+        <select
+          className="select select-accent w-full"
+          value={selectedShade}
+          onChange={(e) => onShadeChange(e.target.value)}
+          disabled={!selectedColor} // disable if no color selected
+        >
           <option value="">Select Shade</option>
-          {colorShades.map((colorShade) => (
-            <option key={colorShade.ShadeID} value={colorShade.ShadeID}>
-              {colorShade.ShadeName}
+          {shades.map((shade) => (
+            <option key={shade.ShadeID} value={shade.ShadeID}>
+              {shade.ShadeName}
             </option>
           ))}
         </select>
@@ -82,4 +113,4 @@ const Search: React.FC<ColorsProps> = ({ className = "" }) => {
   );
 };
 
-export default Search;
+export default Colors;

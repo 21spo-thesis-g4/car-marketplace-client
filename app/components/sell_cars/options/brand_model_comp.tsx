@@ -12,13 +12,24 @@ interface Model {
 }
 
 interface BrandModelProps {
-  className?: string; // allow parent to pass a custom class
+  selectedMaker?: string;
+  onMakerChange?: (makerId: string) => void;
+
+  selectedModel?: string;
+  onModelChange?: (modelId: string) => void;
+
+  className?: string;
 }
 
-const BrandModel: React.FC<BrandModelProps> = ({ className = "" }) => {
+const BrandModel: React.FC<BrandModelProps> = ({
+  selectedMaker,
+  onMakerChange,
+  selectedModel,
+  onModelChange,
+  className = "",
+}) => {
   const [makers, setMakers] = useState<Maker[]>([]);
   const [models, setModels] = useState<Model[]>([]);
-  const [selectedMaker, setSelectedMaker] = useState<string>("");
 
   // Fetch makers
   useEffect(() => {
@@ -63,7 +74,7 @@ const BrandModel: React.FC<BrandModelProps> = ({ className = "" }) => {
         <select
           className="select select-accent w-full"
           value={selectedMaker}
-          onChange={(e) => setSelectedMaker(e.target.value)}
+          onChange={(e) => onMakerChange && onMakerChange(e.target.value)}
         >
           <option value="">Select Brand</option>
           {makers.map((maker) => (
@@ -77,6 +88,8 @@ const BrandModel: React.FC<BrandModelProps> = ({ className = "" }) => {
       <div className="form-control w-full">
         <select
           className="select select-accent w-full"
+          value={selectedModel}
+          onChange={(e) => onModelChange && onModelChange(e.target.value)}
           disabled={!selectedMaker}
         >
           <option value="">Select Model</option>

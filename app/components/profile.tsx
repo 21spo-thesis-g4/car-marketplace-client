@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import NewCarListing from "./sell_cars/addcarlisting";
 
-const Dashboard: React.FC = () => {
+const Profile: React.FC = () => {
   const [user, setUser] = useState<{ name: string; email: string} | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -75,4 +75,4 @@ const Dashboard: React.FC = () => {
   );
 };
 
-export default Dashboard;
+export default Profile;
