@@ -28,15 +28,11 @@ const Search: React.FC = () => {
   return (
     <div className="p-1 rounded-full shadow-md">
       <h1 className="text-xl font-bold">Search for a car</h1>
-      
-      {/* Välitetään ympäristömuuttuja `Types`-komponentille ja lisätään puuttuvat propsit */}
-      <Types
-        selectedType={selectedType}
-        onTypeChange={handleTypeChange}
-        selectedSubType={selectedSubType}
-        onSubTypeChange={handleSubTypeChange}
-      />
-
+      <Types selectedType={""} onTypeChange={function (typeId: string): void {
+        throw new Error("Function not implemented.");
+      } } selectedSubType={""} onSubTypeChange={function (subTypeId: string): void {
+        throw new Error("Function not implemented.");
+      } } />
       <BrandModel />
 
       <div className="my-2">

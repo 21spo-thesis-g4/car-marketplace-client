@@ -44,8 +44,12 @@ const LoginPage: React.FC = () => {
 
     try {
       const response = await loginUser(email, password);
+      //console.log('API response:', response);
+      
       setMessage('Login successful');
       localStorage.setItem('token', response.token); // Store JWT in local storage
+      localStorage.setItem('userID', response.user.id.toString()); // Store user ID in local storage
+
       router.push('/profile');
     } catch (err) {
       console.error('Error:', err);

@@ -29,7 +29,7 @@ export default function BasicAdCard() {
           <button
             className="btn btn-accent w-full"
             onClick={() => {
-              router.push("/new");
+              router.push("/new-listing");
             }}
           >
             Sell your car

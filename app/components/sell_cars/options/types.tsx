@@ -21,7 +21,7 @@ interface SearchProps {
   className?: string;
 }
 
-const Search: React.FC<SearchProps> = ({
+const Types: React.FC<SearchProps> = ({
   selectedType,
   onTypeChange,
   selectedSubType,
@@ -69,8 +69,7 @@ const Search: React.FC<SearchProps> = ({
 
   return (
     <div className={className}>
-      {/* Select Type (fully controlled by parent) */}
-      <div className="form-control mb-2">
+      <div className="form-control">
         <select
           className="select select-accent w-full"
           value={selectedType}
@@ -85,13 +84,11 @@ const Search: React.FC<SearchProps> = ({
         </select>
       </div>
 
-      {/* Select SubType (fully controlled by parent) */}
       <div className="form-control">
         <select
           className="select select-accent w-full"
           value={selectedSubType}
           onChange={(e) => onSubTypeChange(e.target.value)}
-          disabled={!selectedType} // disable if no type selected
         >
           <option value="">Select Sub Type</option>
           {subTypes.map((subType) => (
@@ -105,4 +102,4 @@ const Search: React.FC<SearchProps> = ({
   );
 };
 
-export default Search;
+export default Types;
