@@ -6,6 +6,8 @@ import Types from "./options/types";
 import Colors from "./options/colors";
 import Regions from "./options/region";
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+
 const BasicInformationForm: React.FC = () => {
   const router = useRouter();
   const [userID, setUserID] = useState<number | null>(null);
@@ -126,7 +128,7 @@ const BasicInformationForm: React.FC = () => {
     };
 
     try {
-      const response = await fetch("http://localhost:4000/cars", {
+      const response = await fetch(`${API_URL}/cars`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -1,6 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 
+const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+
 interface Color {
   ColorID: number;
   Name: string;
@@ -14,10 +16,8 @@ interface Shade {
 interface ColorsProps {
   selectedColor: string;
   onColorChange: (colorId: string) => void;
-
   selectedShade: string;
   onShadeChange: (shadeId: string) => void;
-
   className?: string;
 }
 
@@ -35,9 +35,7 @@ const Colors: React.FC<ColorsProps> = ({
   useEffect(() => {
     const fetchColors = async () => {
       try {
-        const response = await fetch(
-          "http://localhost:4000/api/options/colors"
-        );
+        const response = await fetch(`${apiUrl}/api/options/colors`);
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -55,9 +53,7 @@ const Colors: React.FC<ColorsProps> = ({
   useEffect(() => {
     const fetchColorShades = async () => {
       try {
-        const response = await fetch(
-          "http://localhost:4000/api/options/colorshades"
-        );
+        const response = await fetch(`${apiUrl}/api/options/colorshades`);
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }

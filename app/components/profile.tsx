@@ -3,8 +3,10 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import NewCarListing from "./sell_cars/addcarlisting";
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+
 const Profile: React.FC = () => {
-  const [user, setUser] = useState<{ name: string; email: string} | null>(null);
+  const [user, setUser] = useState<{ name: string; email: string } | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
@@ -18,11 +20,11 @@ const Profile: React.FC = () => {
       return;
     }
 
-    fetch("http://localhost:4000/protected", {
+    fetch(`${API_URL}/protected`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((response) => {

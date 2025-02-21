@@ -1,14 +1,27 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Range } from "react-range";
 import BrandModel from "./sell_cars/options/brand_model_comp";
 import Types from "./sell_cars/options/types";
+
+const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
 
 const Search: React.FC = () => {
   const [minYear, setMinYear] = useState("");
   const [maxYear, setMaxYear] = useState("");
   const [mileage, setMileage] = useState([0, 500000]);
   const [price, setPrice] = useState([0, 100000]);
+  const [selectedType, setSelectedType] = useState<string>("");
+  const [selectedSubType, setSelectedSubType] = useState<string>("");
+
+  const handleTypeChange = (typeId: string) => {
+    setSelectedType(typeId);
+    setSelectedSubType(""); // Nollataan subtype, kun päätyyppi vaihtuu
+  };
+
+  const handleSubTypeChange = (subTypeId: string) => {
+    setSelectedSubType(subTypeId);
+  };
 
   const years = Array.from({ length: 60 }, (_, i) => (2025 - i).toString());
 
@@ -21,6 +34,7 @@ const Search: React.FC = () => {
         throw new Error("Function not implemented.");
       } } />
       <BrandModel />
+
       <div className="my-2">
         <label className="block font-semibold mb-1">Model Year</label>
         <div className="flex gap-2">
@@ -63,19 +77,12 @@ const Search: React.FC = () => {
           values={mileage}
           onChange={(values) => setMileage(values)}
           renderTrack={({ props, children }) => (
-            <div
-              {...props}
-              className="h-2 bg-base-content rounded-full relative"
-            >
+            <div {...props} className="h-2 bg-base-content rounded-full relative">
               {children}
             </div>
           )}
           renderThumb={({ props }) => (
-            <div
-              {...props}
-              key={props.key}
-              className="w-5 h-5 bg-accent rounded-full border-2 border-primary-content shadow cursor-pointer"
-            />
+            <div {...props} className="w-5 h-5 bg-accent rounded-full border-2 border-primary-content shadow cursor-pointer" />
           )}
         />
       </div>
@@ -92,24 +99,17 @@ const Search: React.FC = () => {
           values={price}
           onChange={(values) => setPrice(values)}
           renderTrack={({ props, children }) => (
-            <div
-              {...props}
-              className="h-2 bg-base-content rounded-full relative"
-            >
+            <div {...props} className="h-2 bg-base-content rounded-full relative">
               {children}
             </div>
           )}
           renderThumb={({ props }) => (
-            <div
-              {...props}
-              key={props.key}
-              className="w-5 h-5 bg-accent rounded-full border-2 border-primary-content shadow cursor-pointer"
-            />
+            <div {...props} className="w-5 h-5 bg-accent rounded-full border-2 border-primary-content shadow cursor-pointer" />
           )}
         />
       </div>
 
-      <button className="btn btn-accent  w-full mt-4">Search</button>
+      <button className="btn btn-accent w-full mt-4">Search</button>
     </div>
   );
 };

@@ -1,6 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 
+const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+
 interface Country {
   CountryID: number;
   Name: string;
@@ -56,9 +58,11 @@ const LocationSelector: React.FC<LocationProps> = ({
 
     const fetchRegions = async () => {
       try {
+
         const response = await fetch(
-          `http://localhost:4000/api/options/regions?countryId=${selectedCountry}`
+          `${apiUrl}/api/options/regions?countryId=${selectedCountry}`
         );
+
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
