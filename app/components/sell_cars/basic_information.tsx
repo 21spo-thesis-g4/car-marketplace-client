@@ -121,7 +121,7 @@ const BasicInformationForm: React.FC = () => {
       VATDeductible: vatDeductible,
       CountryID: selectedCountry ? parseInt(selectedCountry) : undefined,
       CityID: 2, // Hardcoded for now
-      RegionID: regionId ? parseInt(regionId) : undefined,
+      regionId: selectedRegion ? parseInt(selectedRegion) : undefined,
       ShowExactLocation: showExactLocation,
     };
 
