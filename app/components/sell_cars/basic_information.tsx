@@ -1,11 +1,14 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import BrandModel from "./options/brand_model_comp";
 import Types from "./options/types";
 import Colors from "./options/colors";
 import Regions from "./options/region";
 
 const BasicInformationForm: React.FC = () => {
+  const router = useRouter();
+  const [userID, setUserID] = useState<number | null>(null);
   const [year, setYear] = useState("");
   const [roadCapacity, setRoadCapacity] = useState("Roadworthy");
   const [regNo, setRegNo] = useState("");
@@ -24,13 +27,28 @@ const BasicInformationForm: React.FC = () => {
   const [selectedSubType, setSelectedSubType] = useState("");
   const [selectedMaker, setSelectedMaker] = useState("");
   const [selectedModel, setSelectedModel] = useState("");
+  const [selectedCountry, setSelectedCountry] = useState("");
+  const [selectedRegion, setSelectedRegion] = useState("");
   const [colorId, setColorId] = useState("");
   const [shadeId, setShadeId] = useState("");
   const [price, setPrice] = useState("");
   const [notPriced, setNotPriced] = useState(false);
   const [vatDeductible, setVatDeductible] = useState(false);
-  const [regionId, setRegionId] = useState("");
   const [showExactLocation, setShowExactLocation] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const storedUserID = localStorage.getItem("userID");
+
+    if (!token) {
+      router.push("/profile");
+      return;
+    }
+
+    if (storedUserID) {
+      setUserID(parseInt(storedUserID));
+    }
+  }, []);
 
   const handleTypeChange = (typeId: string) => {
     setSelectedType(typeId);
@@ -58,14 +76,20 @@ const BasicInformationForm: React.FC = () => {
     setShadeId(id);
   };
 
+  const handleCountryChange = (id: string) => {
+    setSelectedCountry(id);
+    setSelectedRegion("");
+  };
+
   const handleRegionChange = (id: string) => {
-    setRegionId(id);
+    setSelectedRegion(id);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const payload = {
+      UserID: userID ?? undefined,
       Year: year ? parseInt(year) : undefined,
       Roadworthy: roadCapacity === "Roadworthy",
       RegistrationNumber: regNo,
@@ -93,18 +117,12 @@ const BasicInformationForm: React.FC = () => {
 
       // Price & location
       Sold: false,
-      Price: notPriced 
-      ? null 
-      : price
-      ? parseInt(price)
-      : undefined,
+      Price: notPriced ? null : price ? parseInt(price) : undefined,
       VATDeductible: vatDeductible,
-      CountryID: 1, // Hardcoded for now
+      CountryID: selectedCountry ? parseInt(selectedCountry) : undefined,
       CityID: 2, // Hardcoded for now
-      UserID: 1, // Hardcoded for now
       RegionID: regionId ? parseInt(regionId) : undefined,
-      ShowExactLocation: showExactLocation
-      
+      ShowExactLocation: showExactLocation,
     };
 
     try {
@@ -122,7 +140,6 @@ const BasicInformationForm: React.FC = () => {
 
       const data = await response.json();
       console.log("Car created:", data);
-      // You could redirect or show success message here
     } catch (error) {
       console.error("Error creating car:", error);
     }
@@ -133,7 +150,6 @@ const BasicInformationForm: React.FC = () => {
       <h2 className="text-md font-bold border-b pb-2 mb-4">
         Basic Information
       </h2>
-
       <form
         className="max-w-3xl mx-auto space-y-4"
         onSubmit={(e) => {
@@ -431,11 +447,13 @@ const BasicInformationForm: React.FC = () => {
 
         <div className="flex items-center gap-4">
           <div className="min-w-[12rem] font-semibold text-right">
-            Regions *
+            Country &amp; region *
           </div>
           <Regions
             className="flex-1"
-            selectedRegion={regionId}
+            selectedCountry={selectedCountry}
+            onCountryChange={handleCountryChange}
+            selectedRegion={selectedRegion}
             onRegionChange={handleRegionChange}
           />
         </div>

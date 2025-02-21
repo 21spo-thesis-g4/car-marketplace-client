@@ -15,7 +15,11 @@ const Search: React.FC = () => {
   return (
     <div className="p-1 rounded-full shadow-md">
       <h1 className="text-xl font-bold">Search for a car</h1>
-      <Types />
+      <Types selectedType={""} onTypeChange={function (typeId: string): void {
+        throw new Error("Function not implemented.");
+      } } selectedSubType={""} onSubTypeChange={function (subTypeId: string): void {
+        throw new Error("Function not implemented.");
+      } } />
       <BrandModel />
       <div className="my-2">
         <label className="block font-semibold mb-1">Model Year</label>

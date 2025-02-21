@@ -73,18 +73,16 @@ const Colors: React.FC<ColorsProps> = ({
 
   return (
     <div className={className}>
-      {/* Select Color (controlled by parent) */}
       <div className="form-control mb-2">
         <select
           className="select select-accent w-full"
           value={selectedColor}
           onChange={(e) => {
             onColorChange(e.target.value);
-            // Optionally reset shade if color changed
             onShadeChange("");
           }}
         >
-          <option value="">Select Color</option>
+          <option>Select Color</option>
           {colors.map((color) => (
             <option key={color.ColorID} value={color.ColorID}>
               {color.Name}
@@ -93,15 +91,13 @@ const Colors: React.FC<ColorsProps> = ({
         </select>
       </div>
 
-      {/* Select Shade (controlled by parent) */}
       <div className="form-control">
         <select
           className="select select-accent w-full"
           value={selectedShade}
           onChange={(e) => onShadeChange(e.target.value)}
-          disabled={!selectedColor} // disable if no color selected
         >
-          <option value="">Select Shade</option>
+          <option>Select Shade</option>
           {shades.map((shade) => (
             <option key={shade.ShadeID} value={shade.ShadeID}>
               {shade.ShadeName}

@@ -11,6 +11,7 @@ const Profile: React.FC = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+    const userID = localStorage.getItem("userID");
 
     if (!token) {
       router.push("/login");
@@ -38,6 +39,7 @@ const Profile: React.FC = () => {
         console.error("Error fetching user data:", error);
         setError("An error occurred while fetching your data. Please log in again.");
         localStorage.removeItem("token");
+        localStorage.removeItem("userID");
         router.push("/login");
       });
   }, [router]);
@@ -64,6 +66,7 @@ const Profile: React.FC = () => {
             className="btn btn-primary"
             onClick={() => {
               localStorage.removeItem("token");
+              localStorage.removeItem("userID");
               router.push("/login");
             }}
           >
