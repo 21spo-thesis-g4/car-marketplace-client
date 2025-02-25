@@ -5,7 +5,7 @@ import ClientConfig from "./components/clientConfig";
 
 export const metadata: Metadata = {
   title: "CarNet",
-  description: "Sell your car online",
+  description: "Sell your car onlinee",
 };
 
 export default function RootLayout({
