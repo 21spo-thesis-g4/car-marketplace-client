@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+//const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+const API_URL = "http://localhost:4000";
 
 const loginUser = async (email: string, password: string) => {
     try {

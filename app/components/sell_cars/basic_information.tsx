@@ -6,7 +6,8 @@ import Types from "./options/types";
 import Colors from "./options/colors";
 import Regions from "./options/region";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+//const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+const API_URL = "http://localhost:4000";
 
 const BasicInformationForm: React.FC = () => {
   const router = useRouter();
@@ -123,7 +124,7 @@ const BasicInformationForm: React.FC = () => {
       VATDeductible: vatDeductible,
       CountryID: selectedCountry ? parseInt(selectedCountry) : undefined,
       CityID: 2, // Hardcoded for now
-      regionId: selectedRegion ? parseInt(selectedRegion) : undefined,
+      RegionID: selectedRegion ? parseInt(selectedRegion) : undefined,
       ShowExactLocation: showExactLocation,
     };
 
@@ -142,6 +143,7 @@ const BasicInformationForm: React.FC = () => {
 
       const data = await response.json();
       console.log("Car created:", data);
+      //router.push("/sell_cars/add-technical");
     } catch (error) {
       console.error("Error creating car:", error);
     }
