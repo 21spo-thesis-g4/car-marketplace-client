@@ -1,8 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import { Range } from "react-range";
-import BrandModel from "./sell_cars/options/brand_model_comp";
-import Types from "./sell_cars/options/types";
+import BrandModel from "./sell_cars/options/basic/brand_model_comp";
+import Types from "./sell_cars/options/basic/types";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
 

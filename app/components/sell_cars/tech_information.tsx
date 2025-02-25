@@ -1,26 +1,86 @@
 "use client";
-import React, { useState } from "react";
-import FuelTypes from "./options/fuel_types";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import FuelTypes from "./options/tech/fuel_type";
+import DriveTypes from "./options/tech/drive_type";
+import Transmission from "./options/tech/transmission";
 
-const TechnicalInformation: React.FC = () => {
-  const [mileage, setMileage] = useState<number | null>(null);
-  const [fuelType, setFuelType] = useState<string | null>(null);
-  const [engineSize, setEngineSize] = useState<string | null>(null);
-  const [driveType, setDriveType] = useState<string | null>(null);
-  const [gearboxType, setGearboxType] = useState<string | null>(null);
-  const [noOfPersons, setNoOfPersons] = useState<number | null>(null);
-  const [noOfDoors, setNoOfDoors] = useState<number | null>(null);
-  const [power, setPower] = useState<number | null>(null);
-  const [fuelConsumption, setFuelConsumption] = useState<{ [key: string]: number | null }>({
+//const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+const API_URL = "http://localhost:4000";
+
+const TechnicalInformationForm: React.FC = () => {
+  const router = useRouter();
+  const [userID, setUserID] = useState<number | null>(null);
+  const [mileage, setMileage] = useState("");
+  const [selectedFuelType, setSelectedFuelType] = useState("");
+  const [selectedDriveType, setSelectedDriveType] = useState("");
+  const [selectedTransmission, setSelectedTransmission] = useState("");
+  const [engineSize, setEngineSize] = useState("");
+  const [gearboxType, setGearboxType] = useState("");
+  const [noOfPersons, setNoOfPersons] = useState("");
+  const [noOfDoors, setNoOfDoors] = useState("");
+  const [power, setPower] = useState("");
+  const [fuelConsumption, setFuelConsumption] = useState<{
+    [key: string]: number | null;
+  }>({
     urban: null,
     road: null,
     combined: null,
   });
 
-  const handleFuelTypeChange = (fuelTypeId: string) => {
-    setFuelType(fuelTypeId);
-  }
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const storedUserID = localStorage.getItem("userID");
 
+    if (!token) {
+      router.push("/profile");
+      return;
+    }
+
+    if (storedUserID) {
+      setUserID(parseInt(storedUserID));
+    }
+  }, []);
+
+  const handleFuelTypeChange = (fuelTypeId: string) => {
+    setSelectedFuelType(fuelTypeId);
+  };
+
+  const handleDriveTypeChange = (driveTypeId: string) => {
+    setSelectedDriveType(driveTypeId);
+  };
+
+  const handleTransmisssionChange = (transmissionId: string) => {
+    setSelectedTransmission(transmissionId);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const payload = {
+      CarID: 123,
+      Mileage: 50000,
+      EngineCapacity: 2.0,
+      Power: 150,
+      Torque: 300,
+      TopSpeed: 220,
+      Acceleration: 7.5,
+      CO2Emissions: 120,
+      FuelConsumptionCity: 8.5,
+      FuelConsumptionHighway: 5.2,
+      FuelConsumptionCombined: 6.5,
+      MassEmpty: 1400,
+      MassTotal: 1900,
+      TowCapacityBraked: 1500,
+      TowCapacityUnbraked: 750,
+      SeatingCapacity: 5,
+      DoorCount: 4,
+      SteeringSide: "Left",
+      FuelTypeID: 1,
+      DriveTypeID: 2,
+      TransmissionID: 1,
+    };
+  };
 
   return (
     <div className="max-w-5xl mx-auto bg-base-100 shadow-md p-4">
@@ -41,11 +101,35 @@ const TechnicalInformation: React.FC = () => {
         </div>
 
         <div className="flex items-center gap-4">
-          <div className="min-w-[12rem] font-semibold text-right">Fuel type *</div>
+          <div className="min-w-[12rem] font-semibold text-right">
+            Fuel type *
+          </div>
           <FuelTypes
             className="flex-1"
-            selectedFuelType=""
+            selectedFuelType={selectedFuelType}
             onFuelTypeChange={handleFuelTypeChange}
+          />
+        </div>
+
+        <div className="flex items-center gap-4">
+          <div className="min-w-[12rem] font-semibold text-right">
+            Drive type *
+          </div>
+          <DriveTypes
+            className="flex-1"
+            selectedDriveType={selectedDriveType}
+            onDriveTypeChange={handleDriveTypeChange}
+          />
+        </div>
+
+        <div className="flex items-center gap-4">
+          <div className="min-w-[12rem] font-semibold text-right">
+            Transmission *
+          </div>
+          <Transmission
+            className="flex-1"
+            selectedTransmission={selectedTransmission}
+            onTransmissionChange={handleTransmisssionChange}
           />
         </div>
 
@@ -59,26 +143,6 @@ const TechnicalInformation: React.FC = () => {
             <option>1.6L</option>
             <option>2.0L</option>
             <option>3.0L</option>
-          </select>
-        </div>
-
-        <div className="flex items-center gap-4">
-          <div className="min-w-[12rem] font-semibold text-right">Drive type *</div>
-          <FuelTypes
-            className="flex-1"
-            selectedDriveType=""
-            onDriveTypeChange={handleDriveTypeChange}
-          />
-        </div>
-
-        <div className="flex items-center gap-4">
-          <label className="min-w-[12rem] font-semibold text-right">
-            Gearbox Type *
-          </label>
-          <select className="select select-accent w-full">
-            <option>Select Gearbox type</option>
-            <option>Manual</option>
-            <option>Automatic</option>
           </select>
         </div>
 
@@ -117,9 +181,7 @@ const TechnicalInformation: React.FC = () => {
           />
         </div>
 
-        <h3 className="font-semibold text-center mt-4">
-          Fuel Consumption
-        </h3>
+        <h3 className="font-semibold text-center mt-4">Fuel Consumption</h3>
         {["urban", "road", "combined"].map((type) => (
           <div key={type} className="flex items-center gap-4">
             <label className="min-w-[12rem] font-semibold text-right">
@@ -164,4 +226,4 @@ const TechnicalInformation: React.FC = () => {
   );
 };
 
-export default TechnicalInformation;
+export default TechnicalInformationForm;

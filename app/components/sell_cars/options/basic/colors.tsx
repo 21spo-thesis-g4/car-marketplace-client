@@ -76,7 +76,6 @@ const Colors: React.FC<ColorsProps> = ({
           value={selectedColor}
           onChange={(e) => {
             onColorChange(e.target.value);
-            onShadeChange("");
           }}
         >
           <option>Select Color</option>

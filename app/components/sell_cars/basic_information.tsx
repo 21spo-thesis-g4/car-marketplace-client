@@ -1,10 +1,10 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import BrandModel from "./options/brand_model_comp";
-import Types from "./options/types";
-import Colors from "./options/colors";
-import Regions from "./options/region";
+import BrandModel from "./options/basic/brand_model_comp";
+import Types from "./options/basic/types";
+import Colors from "./options/basic/colors";
+import Regions from "./options/basic/region";
 
 //const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
 const API_URL = "http://localhost:4000";
@@ -32,8 +32,8 @@ const BasicInformationForm: React.FC = () => {
   const [selectedModel, setSelectedModel] = useState("");
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedRegion, setSelectedRegion] = useState("");
-  const [colorId, setColorId] = useState("");
-  const [shadeId, setShadeId] = useState("");
+  const [selectedColor, setSelectedColor] = useState("");
+  const [selectedShade, setSelectedShade] = useState("");
   const [price, setPrice] = useState("");
   const [notPriced, setNotPriced] = useState(false);
   const [vatDeductible, setVatDeductible] = useState(false);
@@ -72,11 +72,11 @@ const BasicInformationForm: React.FC = () => {
   };
 
   const handleColorChange = (id: string) => {
-    setColorId(id);
+    setSelectedColor(id);
   };
 
   const handleShadeChange = (id: string) => {
-    setShadeId(id);
+    setSelectedShade(id);
   };
 
   const handleCountryChange = (id: string) => {
@@ -115,8 +115,8 @@ const BasicInformationForm: React.FC = () => {
       SubTypeID: selectedSubType ? parseInt(selectedSubType) : undefined,
       MakeID: selectedMaker ? parseInt(selectedMaker) : undefined,
       ModelID: selectedModel ? parseInt(selectedModel) : undefined,
-      ColorID: colorId ? parseInt(colorId) : undefined,
-      ShadeID: shadeId ? parseInt(shadeId) : undefined,
+      ColorID: selectedColor ? parseInt(selectedColor) : undefined,
+      ShadeID: selectedShade ? parseInt(selectedShade) : undefined,
 
       // Price & location
       Sold: false,
@@ -381,9 +381,9 @@ const BasicInformationForm: React.FC = () => {
           </div>
           <Colors
             className="flex-1"
-            selectedColor={colorId}
+            selectedColor={selectedColor}
             onColorChange={handleColorChange}
-            selectedShade={shadeId}
+            selectedShade={selectedShade}
             onShadeChange={handleShadeChange}
           />
         </div>
