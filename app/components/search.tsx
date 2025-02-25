@@ -13,27 +13,52 @@ const Search: React.FC = () => {
   const [price, setPrice] = useState([0, 100000]);
   const [selectedType, setSelectedType] = useState<string>("");
   const [selectedSubType, setSelectedSubType] = useState<string>("");
+  const [searchResults, setSearchResults] = useState<any[]>([]); // Store search results
+  const [selectedMaker, setSelectedMaker] = useState<string>("");
+  const [selectedModel, setSelectedModel] = useState<string>("");
 
   const handleTypeChange = (typeId: string) => {
     setSelectedType(typeId);
-    setSelectedSubType(""); // Nollataan subtype, kun päätyyppi vaihtuu
+    setSelectedSubType(""); // Reset subtype when type changes
   };
 
   const handleSubTypeChange = (subTypeId: string) => {
     setSelectedSubType(subTypeId);
   };
 
+  const handleMakerChange = (MakeID: string) => {
+    setSelectedMaker(MakeID);
+    setSelectedModel(""); // Reset model when brand changes
+  };
+
+  const handleModelChange = (ModelID: string) => {
+    setSelectedModel(ModelID);
+  };
+
   const years = Array.from({ length: 60 }, (_, i) => (2025 - i).toString());
+
+  // Search handler
+  const handleSearch = async () => {
+    const response = await fetch(
+      `${apiUrl}/cars/search?TypeID=${selectedType}&subType=${selectedSubType}&MakeID=${selectedMaker}&ModelID=${selectedModel}&minYear=${minYear}&maxYear=${maxYear}&minMileage=${mileage[0]}&maxMileage=${mileage[1]}&minPrice=${price[0]}&maxPrice=${price[1]}`,
+      {
+        method: "GET",
+      }
+    );
+    
+    if (response.ok) {
+      const data = await response.json();
+      setSearchResults(data); // Update state with search results
+    } else {
+      console.error("Error fetching search results");
+    }
+  };
 
   return (
     <div className="p-1 rounded-full shadow-md">
       <h1 className="text-xl font-bold">Search for a car</h1>
-      <Types selectedType={""} onTypeChange={function (typeId: string): void {
-        throw new Error("Function not implemented.");
-      } } selectedSubType={""} onSubTypeChange={function (subTypeId: string): void {
-        throw new Error("Function not implemented.");
-      } } />
-      <BrandModel />
+      <Types selectedType={selectedType} onTypeChange={handleTypeChange} selectedSubType={selectedSubType} onSubTypeChange={handleSubTypeChange} />
+      <BrandModel selectedMaker={selectedMaker} onMakerChange={handleMakerChange} selectedModel={selectedModel} onModelChange={handleModelChange} />
 
       <div className="my-2">
         <label className="block font-semibold mb-1">Model Year</label>
@@ -109,7 +134,23 @@ const Search: React.FC = () => {
         />
       </div>
 
-      <button className="btn btn-accent w-full mt-4">Search</button>
+      <button className="btn btn-accent w-full mt-4" onClick={handleSearch}>
+        Search
+      </button>
+
+      <div className="mt-4">
+        {searchResults.length > 0 ? (
+          <ul>
+            {searchResults.map((car, index) => (
+              <li key={index}>
+                {car.RegistrationNumber} - {car.Price} €
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No cars found.</p>
+        )}
+      </div>
     </div>
   );
 };
