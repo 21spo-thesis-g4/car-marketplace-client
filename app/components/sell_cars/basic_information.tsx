@@ -6,8 +6,8 @@ import Types from "./options/basic/types";
 import Colors from "./options/basic/colors";
 import Regions from "./options/basic/region";
 
-//const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
-const API_URL = "http://localhost:4000";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://localhost:4000";
+//const API_URL = "http://localhost:4000";
 
 const BasicInformationForm: React.FC = () => {
   const router = useRouter();
