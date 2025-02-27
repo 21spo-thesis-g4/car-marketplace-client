@@ -5,8 +5,8 @@ import FuelTypes from "./options/tech/fuel_type";
 import DriveTypes from "./options/tech/drive_type";
 import Transmission from "./options/tech/transmission";
 
-//const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
-const API_URL = "http://localhost:4000";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://localhost:4000";
+//const API_URL = "http://localhost:4000";
 
 const TechnicalInformationForm: React.FC = () => {
   const router = useRouter();
