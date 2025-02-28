@@ -4,33 +4,32 @@ import Image from "next/image";
 import car1 from "../../public/car1.png";
 
 interface Car {
-  CarID: number;
-  Year: number;
-  Price: number;
-  MakeName: string;
-  ModelName: string;
+  carid: number;
+  year: number;
+  price: number | null;
+  makename: string;
+  modelname: string;
 }
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
-//const apiUrl = "http://localhost:4000";
 
 const NewCars = () => {
   const [cars, setCars] = useState<Car[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchCars = async () => {
       try {
-        // Replace with your actual API URL if needed
         const res = await fetch(`${apiUrl}/api/options/search`);
         if (!res.ok) {
           throw new Error(`Fetch failed with status ${res.status}`);
         }
         const data: Car[] = await res.json();
 
-        // Take first 9 cars
         setCars(data.slice(0, 9));
       } catch (error) {
         console.error("Error fetching cars:", error);
+        setError("Failed to fetch cars. Please try again later.");
       }
     };
 
@@ -39,17 +38,25 @@ const NewCars = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <div className="grid grid-cols-3 gap-4">
-        {cars.map((car) => (
-          <div key={car.CarID} className="card shadow-xl p-2">
-            <Image src={car1} alt={car.ModelName} />
-            <h2 className="card-title">{car.MakeName} {car.ModelName}</h2>
-            <p>
-              €{car.Price.toLocaleString()}, {car.Year}
-            </p>
-          </div>
-        ))}
-      </div>
+      <h2 className="text-xl font-bold mb-4">Latest Cars</h2>
+
+      {error ? (
+        <p className="text-red-500">{error}</p>
+      ) : (
+        <div className="grid grid-cols-3 gap-4">
+          {cars.map((car) => (
+            <div key={car.carid} className="card shadow-xl p-2">
+              <Image src={car1} alt={car.modelname} />
+              <h2 className="card-title">
+                {car.makename} {car.modelname}
+              </h2>
+              <p>
+                {car.price !== null ? `€${car.price.toLocaleString()}` : "Price not available"}, {car.year}
+              </p>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
