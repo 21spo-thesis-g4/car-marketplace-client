@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import NewCarListing from "./sell_cars/addcarlisting";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://localhost:4000";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
 //const API_URL = "http://localhost:4000";
 
 const Profile: React.FC = () => {

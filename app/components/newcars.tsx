@@ -11,7 +11,7 @@ interface Car {
   ModelName: string;
 }
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://localhost:4000";
+const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
 //const apiUrl = "http://localhost:4000";
 
 const NewCars = () => {
