@@ -2,16 +2,15 @@
 import React, { useEffect, useState } from "react";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
-//const apiUrl = "http://localhost:4000";
 
 interface VehicleType {
-  TypeID: number;
-  TypeName: string;
+  typeid: number;
+  typename: string;
 }
 
 interface SubType {
-  SubTypeID: number;
-  Name: string;
+  subtypeid: number;
+  name: string;
 }
 
 interface SearchProps {
@@ -78,8 +77,8 @@ const Types: React.FC<SearchProps> = ({
         >
           <option value="">Select Type</option>
           {types.map((type) => (
-            <option key={type.TypeID} value={type.TypeID}>
-              {type.TypeName}
+            <option key={type.typeid} value={type.typeid}>
+              {type.typename}
             </option>
           ))}
         </select>
@@ -93,8 +92,8 @@ const Types: React.FC<SearchProps> = ({
         >
           <option value="">Select Sub Type</option>
           {subTypes.map((subType) => (
-            <option key={subType.SubTypeID} value={subType.SubTypeID}>
-              {subType.Name}
+            <option key={subType.subtypeid} value={subType.subtypeid}>
+              {subType.name}
             </option>
           ))}
         </select>

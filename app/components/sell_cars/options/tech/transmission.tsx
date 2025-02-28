@@ -2,11 +2,10 @@
 import React, { useEffect, useState } from "react";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
-//const apiUrl = "http://localhost:4000";
 
 interface Transmission {
-  TransmissionID: number;
-  Name: string;
+  transmissionid: number;
+  name: string;
 }
 
 interface TransmissionProps {
@@ -20,18 +19,18 @@ const Transmission: React.FC<TransmissionProps> = ({
   onTransmissionChange,
   className = "",
 }) => {
-  const [transmission, setTransmission] = useState<Transmission[]>([]);
+  const [transmissions, setTransmissions] = useState<Transmission[]>([]);
 
   // Fetch transmission types
   useEffect(() => {
     const fetchTransmissionTypes = async () => {
       try {
-        const response = await fetch(`${apiUrl}/api/options/transmission`);
+        const response = await fetch(`${apiUrl}/api/options/transmissions`);
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const data: Transmission[] = await response.json();
-        setTransmission(data);
+        setTransmissions(data);
       } catch (error) {
         console.error("Failed to fetch transmission types:", error);
       }
@@ -49,9 +48,9 @@ const Transmission: React.FC<TransmissionProps> = ({
           onChange={(e) => onTransmissionChange(e.target.value)}
         >
           <option value="">Select Transmission Type</option>
-          {transmission.map((transmission) => (
-            <option key={transmission.TransmissionID} value={transmission.TransmissionID}>
-              {transmission.Name}
+          {transmissions.map((transmission) => (
+            <option key={transmission.transmissionid} value={transmission.transmissionid}>
+              {transmission.name} 
             </option>
           ))}
         </select>

@@ -2,17 +2,16 @@
 import React, { useEffect, useState } from "react";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
-//const apiUrl = "http://localhost:4000";
 
 interface Country {
-  CountryID: number;
-  Name: string;
+  countryid: number;
+  name: string;
 }
 
 interface Region {
-  RegionID: number;
-  CountryID: number;
-  Name: string;
+  regionid: number;
+  countryid: number;
+  name: string;
 }
 
 interface LocationProps {
@@ -37,9 +36,7 @@ const LocationSelector: React.FC<LocationProps> = ({
   useEffect(() => {
     const fetchCountries = async () => {
       try {
-        const response = await fetch(
-          "http://localhost:4000/api/options/countries"
-        );
+        const response = await fetch(`${apiUrl}/api/options/countries`);
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -55,13 +52,11 @@ const LocationSelector: React.FC<LocationProps> = ({
 
   // Fetch regions based on selected country
   useEffect(() => {
-    if (!selectedCountry) return; // Don't fetch if no country is selected
+    if (!selectedCountry) return;
 
     const fetchRegions = async () => {
       try {
-        const response = await fetch(
-          `${apiUrl}/api/options/regions?countryId=${selectedCountry}`
-        );
+        const response = await fetch(`${apiUrl}/api/options/regions?countryid=${selectedCountry}`);
 
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -83,14 +78,17 @@ const LocationSelector: React.FC<LocationProps> = ({
           className="select select-accent w-full"
           value={selectedCountry}
           onChange={(e) => {
-            onCountryChange(e.target.value);
-            onRegionChange("");
+            const newCountry = e.target.value;
+            if (newCountry !== selectedCountry) {
+              onCountryChange(newCountry);
+              onRegionChange(""); // Tyhjennetään vain, jos maa vaihtuu
+            }
           }}
         >
           <option value="">Select Country</option>
           {countries.map((country) => (
-            <option key={country.CountryID} value={country.CountryID}>
-              {country.Name}
+            <option key={country.countryid} value={country.countryid}>
+              {country.name}
             </option>
           ))}
         </select>
@@ -105,8 +103,8 @@ const LocationSelector: React.FC<LocationProps> = ({
         >
           <option value="">Select Region</option>
           {regions.map((region) => (
-            <option key={region.RegionID} value={region.RegionID}>
-              {region.Name}
+            <option key={region.regionid} value={region.regionid}>
+              {region.name}
             </option>
           ))}
         </select>

@@ -2,16 +2,15 @@
 import React, { useEffect, useState } from "react";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
-//const apiUrl = "http://localhost:4000";
 
 interface Maker {
-  MakeID: number;
-  MakeName: string;
+  makeid: number;
+  makename: string;
 }
 
 interface Model {
-  ModelID: number;
-  ModelName: string;
+  modelid: number;
+  modelname: string;
 }
 
 interface BrandModelProps {
@@ -37,8 +36,9 @@ const BrandModel: React.FC<BrandModelProps> = ({
     const fetchMakers = async () => {
       try {
         const response = await fetch(`${apiUrl}/api/options/makers`);
-        if (!response.ok)
+        if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
+        }
         const data: Maker[] = await response.json();
         setMakers(data);
       } catch (error) {
@@ -54,8 +54,9 @@ const BrandModel: React.FC<BrandModelProps> = ({
     const fetchModels = async () => {
       try {
         const response = await fetch(`${apiUrl}/api/options/models/${selectedMaker}`);
-        if (!response.ok)
+        if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
+        }
         const data: Model[] = await response.json();
         setModels(data);
       } catch (error) {
@@ -75,8 +76,8 @@ const BrandModel: React.FC<BrandModelProps> = ({
         >
           <option value="">Select Brand</option>
           {makers.map((maker) => (
-            <option key={maker.MakeID} value={maker.MakeID}>
-              {maker.MakeName}
+            <option key={maker.makeid} value={maker.makeid}>
+              {maker.makename}
             </option>
           ))}
         </select>
@@ -91,8 +92,8 @@ const BrandModel: React.FC<BrandModelProps> = ({
         >
           <option value="">Select Model</option>
           {models.map((model) => (
-            <option key={model.ModelID} value={model.ModelID}>
-              {model.ModelName}
+            <option key={model.modelid} value={model.modelid}>
+              {model.modelname}
             </option>
           ))}
         </select>
