@@ -30,9 +30,10 @@ const BasicInformationForm: React.FC = () => {
   const [selectedSubType, setSelectedSubType] = useState("");
   const [selectedMaker, setSelectedMaker] = useState("");
   const [selectedModel, setSelectedModel] = useState("");
+  const [selectedColor, setSelectedColor] = useState("");
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedRegion, setSelectedRegion] = useState("");
-  const [selectedColor, setSelectedColor] = useState("");
+  const [selectedCity, setSelectedCity] = useState("");
   const [selectedShade, setSelectedShade] = useState("");
   const [price, setPrice] = useState("");
   const [notPriced, setNotPriced] = useState(false);
@@ -86,6 +87,11 @@ const BasicInformationForm: React.FC = () => {
 
   const handleRegionChange = (id: string) => {
     setSelectedRegion(id);
+    setSelectedCity("");
+  };
+
+  const handleCityChange = (id: string) => {
+    setSelectedCity(id);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -123,8 +129,8 @@ const BasicInformationForm: React.FC = () => {
       price: notPriced ? null : price ? parseInt(price) : undefined,
       vatdeductible: vatDeductible,
       countryid: selectedCountry ? parseInt(selectedCountry) : undefined,
-      cityid: 2, // Hardcoded for now
       regionid: selectedRegion ? parseInt(selectedRegion) : undefined,
+      cityid: selectedCity ? parseInt(selectedCity) : undefined,
       showexactlocation: showExactLocation,
     };
 
@@ -390,6 +396,35 @@ const BasicInformationForm: React.FC = () => {
 
         <div className="flex items-center gap-4">
           <div className="min-w-[12rem] font-semibold text-right">
+            Location *
+          </div>
+          <Regions
+            className="flex-1"
+            selectedCountry={selectedCountry}
+            onCountryChange={handleCountryChange}
+            selectedRegion={selectedRegion}
+            onRegionChange={handleRegionChange}
+            selectedCity={selectedCity}
+            onCityChange={handleCityChange}
+          />
+        </div>
+
+        <div className="flex items-center gap-4">
+          <label className="min-w-[12rem] font-semibold text-right">
+            Show exact location
+          </label>
+          <div className="w-full flex items-center">
+            <input
+              type="checkbox"
+              className="checkbox checkbox-accent mr-2"
+              checked={showExactLocation}
+              onChange={(e) => setShowExactLocation(e.target.checked)}
+            />
+          </div>
+        </div>
+
+        <div className="flex items-center gap-4">
+          <div className="min-w-[12rem] font-semibold text-right">
             Other info
           </div>
           <textarea
@@ -445,33 +480,6 @@ const BasicInformationForm: React.FC = () => {
               className="checkbox checkbox-accent mr-2"
               checked={vatDeductible}
               onChange={(e) => setVatDeductible(e.target.checked)}
-            />
-          </div>
-        </div>
-
-        <div className="flex items-center gap-4">
-          <div className="min-w-[12rem] font-semibold text-right">
-            Country &amp; region *
-          </div>
-          <Regions
-            className="flex-1"
-            selectedCountry={selectedCountry}
-            onCountryChange={handleCountryChange}
-            selectedRegion={selectedRegion}
-            onRegionChange={handleRegionChange}
-          />
-        </div>
-
-        <div className="flex items-center gap-4">
-          <label className="min-w-[12rem] font-semibold text-right">
-            Show exact location
-          </label>
-          <div className="w-full flex items-center">
-            <input
-              type="checkbox"
-              className="checkbox checkbox-accent mr-2"
-              checked={showExactLocation}
-              onChange={(e) => setShowExactLocation(e.target.checked)}
             />
           </div>
         </div>

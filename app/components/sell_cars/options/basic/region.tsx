@@ -14,11 +14,19 @@ interface Region {
   name: string;
 }
 
+interface City {
+  cityid: number;
+  regionid: number;
+  name: string;
+}
+
 interface LocationProps {
   selectedCountry: string;
   onCountryChange: (countryId: string) => void;
   selectedRegion: string;
   onRegionChange: (regionId: string) => void;
+  selectedCity: string;
+  onCityChange: (cityId: string) => void;
   className?: string;
 }
 
@@ -27,10 +35,13 @@ const LocationSelector: React.FC<LocationProps> = ({
   onCountryChange,
   selectedRegion,
   onRegionChange,
+  selectedCity,
+  onCityChange,
   className = "",
 }) => {
   const [countries, setCountries] = useState<Country[]>([]);
   const [regions, setRegions] = useState<Region[]>([]);
+  const [cities, setCities] = useState<City[]>([]);
 
   // Fetch countries
   useEffect(() => {
@@ -71,8 +82,31 @@ const LocationSelector: React.FC<LocationProps> = ({
     fetchRegions();
   }, [selectedCountry]);
 
+  // Fetch cities based on selected region
+  useEffect(() => {
+    if (!selectedRegion) return;
+
+    const fetchCities = async () => {
+      try {
+        const response = await fetch(`${apiUrl}/api/options/cities?regionid=${selectedRegion}`);
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data: City[] = await response.json();
+        console.log("Fetched cities:", data);
+        setCities(data);
+      } catch (error) {
+        console.error("Failed to fetch cities:", error);
+      }
+    };
+
+    fetchCities();
+  }, [selectedRegion]);
+
   return (
     <div className={className}>
+      {/* Country Selection */}
       <div className="form-control">
         <select
           className="select select-accent w-full"
@@ -81,7 +115,8 @@ const LocationSelector: React.FC<LocationProps> = ({
             const newCountry = e.target.value;
             if (newCountry !== selectedCountry) {
               onCountryChange(newCountry);
-              onRegionChange(""); // Tyhjennetään vain, jos maa vaihtuu
+              onRegionChange(""); // Reset region when country changes
+              onCityChange(""); // Reset city when country changes
             }
           }}
         >
@@ -94,17 +129,38 @@ const LocationSelector: React.FC<LocationProps> = ({
         </select>
       </div>
 
+      {/* Region Selection */}
       <div className="form-control mt-2">
         <select
           className="select select-accent w-full"
           value={selectedRegion}
-          onChange={(e) => onRegionChange(e.target.value)}
+          onChange={(e) => {
+            onRegionChange(e.target.value);
+            onCityChange(""); // Reset city when region changes
+          }}
           disabled={!selectedCountry}
         >
           <option value="">Select Region</option>
           {regions.map((region) => (
             <option key={region.regionid} value={region.regionid}>
               {region.name}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* City Selection */}
+      <div className="form-control mt-2">
+        <select
+          className="select select-accent w-full"
+          value={selectedCity}
+          onChange={(e) => onCityChange(e.target.value)}
+          disabled={!selectedRegion}
+        >
+          <option value="">Select City</option>
+          {cities.map((city) => (
+            <option key={city.cityid} value={city.cityid}>
+              {city.name}
             </option>
           ))}
         </select>
