@@ -2,11 +2,10 @@
 import React, { useEffect, useState } from "react";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
-//const apiUrl = "http://localhost:4000";
 
 interface DriveType {
-  DriveTypeID: number;
-  Name: string;
+  drivetypeid: number;
+  name: string;
 }
 
 interface DriveProps {
@@ -26,7 +25,7 @@ const DriveTypes: React.FC<DriveProps> = ({
   useEffect(() => {
     const fetchDriveTypes = async () => {
       try {
-        const response = await fetch(`${apiUrl}/api/options/drivetype`);
+        const response = await fetch(`${apiUrl}/api/options/drivetypes`);
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -50,8 +49,8 @@ const DriveTypes: React.FC<DriveProps> = ({
         >
           <option value="">Select Drive Type</option>
           {driveTypes.map((drive) => (
-            <option key={drive.DriveTypeID} value={drive.DriveTypeID}>
-              {drive.Name}
+            <option key={drive.drivetypeid} value={drive.drivetypeid}>
+              {drive.name}
             </option>
           ))}
         </select>

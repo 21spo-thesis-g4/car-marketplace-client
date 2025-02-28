@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import NewCarListing from "./sell_cars/addcarlisting";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
-//const API_URL = "http://localhost:4000";
 
 const Profile: React.FC = () => {
   const [user, setUser] = useState<{ name: string; email: string } | null>(null);
@@ -14,37 +13,40 @@ const Profile: React.FC = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    const userID = localStorage.getItem("userID");
 
     if (!token) {
       router.push("/login");
       return;
     }
 
-    fetch(`${API_URL}/protected`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((response) => {
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch(`${API_URL}/protected`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
         if (!response.ok) {
           throw new Error("Unauthorized");
         }
-        return response.json();
-      })
-      .then((data) => {
+
+        const data = await response.json();
         setUser(data.user);
-        setLoading(false);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Error fetching user data:", error);
         setError("An error occurred while fetching your data. Please log in again.");
         localStorage.removeItem("token");
         localStorage.removeItem("userID");
         router.push("/login");
-      });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserData();
   }, [router]);
 
   if (loading) {

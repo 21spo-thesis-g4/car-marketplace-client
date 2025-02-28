@@ -92,40 +92,40 @@ const BasicInformationForm: React.FC = () => {
     e.preventDefault();
 
     const payload = {
-      UserID: userID ?? undefined,
-      Year: year ? parseInt(year) : undefined,
-      Roadworthy: roadCapacity === "Roadworthy",
-      RegistrationNumber: regNo,
-      TaxFree: taxFree,
-      VIN: vin,
-      FirstRegistration:
+      userid: userID ?? undefined,
+      year: year ? parseInt(year) : undefined,
+      roadworthy: roadCapacity === "roadworthy",
+      registrationnumber: regNo,
+      taxfree: taxFree,
+      vin: vin,
+      firstregistration:
         firstRegYear && firstRegMonth && firstRegDay
           ? `${firstRegYear}-${firstRegMonth}-${firstRegDay}`
           : null,
-      InspectionDate:
+      inspectiondate:
         inspectionYear && inspectionMonth && inspectionDay
           ? `${inspectionYear}-${inspectionMonth}-${inspectionDay}`
           : null,
-      FirstServiceComing: firstService,
-      NumberOfOwners: previousOwners ? parseInt(previousOwners) : undefined,
-      Description: otherInfo,
+      firstservicecoming: firstService,
+      numberofowners: previousOwners ? parseInt(previousOwners) : undefined,
+      description: otherInfo,
 
       // Child data:
-      TypeID: selectedType ? parseInt(selectedType) : undefined,
-      SubTypeID: selectedSubType ? parseInt(selectedSubType) : undefined,
-      MakeID: selectedMaker ? parseInt(selectedMaker) : undefined,
-      ModelID: selectedModel ? parseInt(selectedModel) : undefined,
-      ColorID: selectedColor ? parseInt(selectedColor) : undefined,
-      ShadeID: selectedShade ? parseInt(selectedShade) : undefined,
+      typeid: selectedType ? parseInt(selectedType) : undefined,
+      subtypeid: selectedSubType ? parseInt(selectedSubType) : undefined,
+      makeid: selectedMaker ? parseInt(selectedMaker) : undefined,
+      modelid: selectedModel ? parseInt(selectedModel) : undefined,
+      colorid: selectedColor ? parseInt(selectedColor) : undefined,
+      shadeid: selectedShade ? parseInt(selectedShade) : undefined,
 
       // Price & location
-      Sold: false,
-      Price: notPriced ? null : price ? parseInt(price) : undefined,
-      VATDeductible: vatDeductible,
-      CountryID: selectedCountry ? parseInt(selectedCountry) : undefined,
-      CityID: 2, // Hardcoded for now
-      RegionID: selectedRegion ? parseInt(selectedRegion) : undefined,
-      ShowExactLocation: showExactLocation,
+      sold: false,
+      price: notPriced ? null : price ? parseInt(price) : undefined,
+      vatdeductible: vatDeductible,
+      countryid: selectedCountry ? parseInt(selectedCountry) : undefined,
+      cityid: 2, // Hardcoded for now
+      regionid: selectedRegion ? parseInt(selectedRegion) : undefined,
+      showexactlocation: showExactLocation,
     };
 
     try {

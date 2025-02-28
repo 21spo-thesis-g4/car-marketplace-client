@@ -2,11 +2,10 @@
 import React, { useEffect, useState } from "react";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
-//const apiUrl = "http://localhost:4000";
 
 interface FuelType {
-  FuelTypeID: number;
-  Name: string;
+  fueltypeid: number;
+  name: string;
 }
 
 interface FuelProps {
@@ -26,7 +25,7 @@ const FuelTypes: React.FC<FuelProps> = ({
   useEffect(() => {
     const fetchFuelTypes = async () => {
       try {
-        const response = await fetch(`${apiUrl}/api/options/fueltype`);
+        const response = await fetch(`${apiUrl}/api/options/fueltypes`);
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -50,8 +49,8 @@ const FuelTypes: React.FC<FuelProps> = ({
         >
           <option value="">Select Fuel Type</option>
           {fuelTypes.map((fuel) => (
-            <option key={fuel.FuelTypeID} value={fuel.FuelTypeID}>
-              {fuel.Name}
+            <option key={fuel.fueltypeid} value={fuel.fueltypeid}>
+              {fuel.name}
             </option>
           ))}
         </select>
