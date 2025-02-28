@@ -2,16 +2,15 @@
 import React, { useEffect, useState } from "react";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
-//const apiUrl = "http://localhost:4000";
 
 interface Color {
-  ColorID: number;
-  Name: string;
+  colorid: number;
+  name: string;
 }
 
 interface Shade {
-  ShadeID: number;
-  ShadeName: string;
+  shadeid: number;
+  shadename: string;
 }
 
 interface ColorsProps {
@@ -80,8 +79,8 @@ const Colors: React.FC<ColorsProps> = ({
         >
           <option>Select Color</option>
           {colors.map((color) => (
-            <option key={color.ColorID} value={color.ColorID}>
-              {color.Name}
+            <option key={color.colorid} value={color.colorid}>
+              {color.name}
             </option>
           ))}
         </select>
@@ -95,8 +94,8 @@ const Colors: React.FC<ColorsProps> = ({
         >
           <option>Select Shade</option>
           {shades.map((shade) => (
-            <option key={shade.ShadeID} value={shade.ShadeID}>
-              {shade.ShadeName}
+            <option key={shade.shadeid} value={shade.shadeid}>
+              {shade.shadename}
             </option>
           ))}
         </select>
