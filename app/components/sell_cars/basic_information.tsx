@@ -7,7 +7,6 @@ import Colors from "./options/basic/colors";
 import Regions from "./options/basic/region";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://localhost:4000";
-//const API_URL = "http://localhost:4000";
 
 const BasicInformationForm: React.FC = () => {
   const router = useRouter();
@@ -149,7 +148,10 @@ const BasicInformationForm: React.FC = () => {
 
       const data = await response.json();
       console.log("Car created:", data);
-      //router.push("/sell_cars/add-technical");
+      if (data.carid) {
+        localStorage.setItem("carID", data.carid);
+      }
+      router.push("/new-listing/add-technical");
     } catch (error) {
       console.error("Error creating car:", error);
     }
