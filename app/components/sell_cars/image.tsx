@@ -1,81 +1,69 @@
 "use client";
 import React, { useState } from "react";
 
-const ImagesSection: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://localhost:4000";
+
+const ImageUpload = () => {
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [imageUrl, setImageUrl] = useState(null);
+  const [uploading, setUploading] = useState(false);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setSelectedFiles(e.target.files);
-      // handle uploading or display preview
+    if (e.target.files && e.target.files[0]) {
+      setSelectedFile(e.target.files[0]);
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!selectedFiles || selectedFiles.length < 1) {
+  const handleUpload = async () => {
+    if (!selectedFile) {
       alert("Please upload at least one image.");
       return;
     }
-    // Otherwise proceed
-    console.log("Proceed with images:", selectedFiles);
+
+    setUploading(true);
+
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+
+    try {
+      const response = await fetch(`${API_URL}/upload`, {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) throw new Error("Upload failed");
+
+      const data = await response.json();
+      setImageUrl(data.url); // Save uploaded image URL
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    } finally {
+      setUploading(false);
+    }
   };
 
   return (
-    <div className="max-w-5xl mx-auto">
-      <div className="collapse collapse-arrow bg-base-100 shadow-md">
-        <input
-          type="checkbox"
-          checked={isOpen}
-          onChange={() => setIsOpen(!isOpen)}
-        />
-        <div className="collapse-title text-md font-bold border-b">Images</div>
+    <div className="max-w-md mx-auto">
+      <input type="file" accept="image/*" onChange={handleFileChange} />
 
-        <div className="collapse-content p-1">
-          <form className="max-w-3xl mx-auto space-y-4" onSubmit={handleSubmit}>
-            <div className="flex items-center gap-4">
-              <label className="min-w-[12rem] font-semibold">Images *</label>
-              <div className="flex items-center gap-4">
-                <label className="btn btn-primary relative overflow-hidden">
-                  Select images
-                  <input
-                    type="file"
-                    multiple
-                    accept="image/*"
-                    className="absolute inset-0 opacity-0 cursor-pointer"
-                    onChange={handleFileChange}
-                  />
-                </label>
-                <span className="text-sm text-gray-600">
-                  Upload 1–12 images
-                </span>
-              </div>
-            </div>
+      {selectedFile && (
+        <button
+          className="btn btn-primary mt-2"
+          onClick={handleUpload}
+          disabled={uploading}
+        >
+          {uploading ? "Uploading..." : "Upload"}
+        </button>
+      )}
 
-            <div className="grid grid-cols-5 gap-4">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <div
-                  key={i}
-                  className="w-full aspect-square bg-gray-100 border 
-                             border-gray-300 flex items-center justify-center 
-                             text-gray-400"
-                >
-                  Car {i + 1}
-                </div>
-              ))}
-            </div>
-
-            <p className="text-sm text-gray-500">Upload at least 1 image</p>
-
-            <button type="submit" className="btn btn-primary px-8">
-              Create listing
-            </button>
-          </form>
+      {imageUrl && (
+        <div className="mt-4">
+          <p>Uploaded Image:</p>
+          <img src={imageUrl} alt="Uploaded" className="w-full h-auto" />
         </div>
-      </div>
+      )}
     </div>
   );
 };
 
-export default ImagesSection;
+export default ImageUpload;
