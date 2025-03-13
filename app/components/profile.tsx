@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import UserCars from "./userCars";
 import NewCarListing from "./sell_cars/addcarlisting";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
@@ -40,6 +41,7 @@ const Profile: React.FC = () => {
         setError("An error occurred while fetching your data. Please log in again.");
         localStorage.removeItem("token");
         localStorage.removeItem("userID");
+        localStorage.removeItem("carID")
         router.push("/login");
       } finally {
         setLoading(false);
@@ -64,6 +66,7 @@ const Profile: React.FC = () => {
         <div className="space-y-4">
           <p className="text-lg">Welcome, {user?.name}!</p>
           <p>Email: {user?.email}</p>
+          <UserCars />
           <NewCarListing />
         </div>
         <div className="flex justify-center mt-6">
