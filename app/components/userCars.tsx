@@ -9,6 +9,7 @@ interface Car {
   price: number | null;
   makename: string;
   modelname: string;
+  car_image: string | null;
 }
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
@@ -28,7 +29,7 @@ const UserCars = () => {
 
     const fetchUserCars = async () => {
       try {
-        const res = await fetch(`${API_URL}/api/options/search?userid=${storedUserID}`);
+        const res = await fetch(`${API_URL}/cars/search?userid=${storedUserID}`);
         if (!res.ok) {
           throw new Error(`Fetch failed with status ${res.status}`);
         }
@@ -55,7 +56,13 @@ const UserCars = () => {
           {cars.length > 0 ? (
             cars.map((car) => (
               <div key={car.carid} className="card shadow-xl p-2">
-                <Image src={car1} alt={car.modelname} />
+              <Image 
+                src={car.car_image || car1} // Fallback to a placeholder image if no car image is available
+                alt={car.modelname}
+                layout="fill"
+                objectFit="cover"
+                className="rounded"
+              />
                 <h2 className="card-title">
                   {car.makename} {car.modelname}
                 </h2>
