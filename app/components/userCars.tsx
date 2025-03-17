@@ -59,9 +59,9 @@ const UserCars = () => {
               <Image 
                 src={car.car_image || car1} // Fallback to a placeholder image if no car image is available
                 alt={car.modelname}
-                layout="fill"
-                objectFit="cover"
-                className="rounded"
+                width={300}
+                height={200}
+                className="object-cover w-full h-full pb-1"
               />
                 <h2 className="card-title">
                   {car.makename} {car.modelname}
