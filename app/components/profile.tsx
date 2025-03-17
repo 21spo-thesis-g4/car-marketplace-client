@@ -61,7 +61,7 @@ const Profile: React.FC = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center">
-      <div className="w-full max-w-md p-8 space-y-8 rounded-lg shadow-md">
+      <div className="w-full max-w-4xl p-8 space-y-8 rounded-lg shadow-md">
         <h2 className="text-2xl font-bold text-center">Profile</h2>
         <div className="space-y-4">
           <p className="text-lg">Welcome, {user?.name}!</p>
@@ -75,6 +75,7 @@ const Profile: React.FC = () => {
             onClick={() => {
               localStorage.removeItem("token");
               localStorage.removeItem("userID");
+              localStorage.removeItem("carID")
               router.push("/login");
             }}
           >
