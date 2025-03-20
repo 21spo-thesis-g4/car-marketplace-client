@@ -27,7 +27,9 @@ const NewCars = () => {
         }
         const data: Car[] = await res.json();
 
-        setCars(data.slice(0, 9));
+        const sortedCars = data.sort((a, b) => b.carid -a.carid)
+
+        setCars(sortedCars.slice(0, 9));
       } catch (error) {
         console.error("Error fetching cars:", error);
         setError("Failed to fetch cars. Please try again later.");
