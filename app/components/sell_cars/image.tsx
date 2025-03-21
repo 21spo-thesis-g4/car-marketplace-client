@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
 
@@ -93,7 +94,7 @@ const ImageUpload = () => {
       {imagePreviews.length > 0 && (
         <div className="grid grid-cols-3 gap-2 mt-4">
           {imagePreviews.map((src, index) => (
-            <img key={index} src={src} alt={`Selected ${index}`} className="w-full h-auto" />
+            <Image key={index} src={src} alt={`Selected ${index}`} className="w-full h-auto" />
           ))}
         </div>
       )}
